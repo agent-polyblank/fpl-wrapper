@@ -1,5 +1,6 @@
 """Fixtures for tests."""
 
+from ensurepip import bootstrap
 import pytest
 
 @pytest.fixture
@@ -195,4 +196,10 @@ def player_detail_data():
         "selected_rank_type": 260,
         "starts_per_90": 0,
         "clean_sheets_per_90": 0
+    }
+
+@pytest.fixture
+def bootstrap_data(player_detail_data):
+    return {
+        "elements": [player_detail_data]
     }

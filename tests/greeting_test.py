@@ -4,6 +4,7 @@ import pytest
 
 from src.fpl.example import greeting
 
+
 @pytest.mark.parametrize(
     argnames=("name", "expected"),
     argvalues=(

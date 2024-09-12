@@ -1,3 +1,5 @@
+"""Tests for models."""
+
 import pytest
 from pydantic import ValidationError
 from fpl.models import Fixture, History, HistoryPast, PlayerData, PlayerDetail

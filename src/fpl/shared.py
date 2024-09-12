@@ -7,51 +7,67 @@ import httpx
 from fpl.models import PlayerData, PlayerDetail
 
 
-def get_static_content() -> dict:
-    """Get all the static content from the FPL API.
-
-    Returns
-    -------
-        dict: Static content from the FPL API.
-
-    """
-    url = "https://fantasy.premierleague.com/api/bootstrap-static/"
-    return json.loads(httpx.get(url, headers={}, data={}).text)
-
-
-def get_all_player_detail(data: dict[str:any]) -> list[PlayerDetail]:
+def get_all_player_detail(
+    client: httpx.Client,
+) -> list[PlayerDetail]:
     """Get all player details from the FPL API.
 
-    Returns
+    Args:
+    ----
+        client (httpx.Client): HTTP client instance.
+        data (dict[str, any]): Static content data.
+
+    Returns:
     -------
         list[PlayerDetail]: List of player details.
 
     """
+    url = "https://fantasy.premierleague.com/api/bootstrap-static/"
+    data = json.loads(client.get(url).text)
     return [PlayerDetail(**player) for player in data["elements"]]
 
 
-def get_picks(team_id: str, gw: str) -> list[dict]:
+def get_picks(client: httpx.Client, team_id: str, gw: str) -> list[dict]:
     """Get player picks for a specific gameweek.
 
     Args:
     ----
+        client (httpx.Client): HTTP client instance.
         team_id (str): Player's team id.
         gw (str): Gameweek number.
 
-    Returns:
+    Returns
     -------
         list[dict]: list of player picks for a specific gameweek.
 
     """
     url = f"https://fantasy.premierleague.com/api/entry/{team_id}/event/{gw}/picks/"
-    return json.loads(httpx.get(url, headers={}, data={}).text)["picks"]
+    return json.loads(client.get(url).text)["picks"]
 
 
-def get_player_by_id(player_id: str) -> PlayerData:
+def get_player_summary(client: httpx.Client, player_id: str) -> httpx.Response:
+    """Get player summary from the FPL API.
+
+    Args:
+    ----
+        client (httpx.Client): HTTP client instance.
+        player_id (str): Player id.
+
+    Returns:
+    -------
+        httpx.Response: Response object containing player summary.
+
+    """
+    url = f"https://fantasy.premierleague.com/api/element-summary/{player_id}/"
+    return client.get(url)
+
+
+def get_player_by_id(client: httpx.Client, player_id: str) -> PlayerData:
     """Get player data from the FPL API.
 
     Args:
     ----
+        client (httpx.Client): HTTP client instance.
         player_id (str): Player id.
 
     Returns:
@@ -59,7 +75,10 @@ def get_player_by_id(player_id: str) -> PlayerData:
         PlayerData: Player data.
 
     """
-    url = f"https://fantasy.premierleague.com/api/element-summary/{player_id}/"
-    response = httpx.get(url)
-    player_data = response.json()
-    return PlayerData(**player_data)
+    player_summary = get_player_summary(client, player_id)
+    return PlayerData(
+        player_detail=get_all_player_detail(get_static_content())[
+            player_id - 1
+        ],
+        **player_summary.json(),
+    )

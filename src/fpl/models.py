@@ -95,19 +95,11 @@ class HistoryPast(BaseModel):
     expected_goals_conceded: str
 
 
-class PlayerData(BaseModel):
-    """Player data model."""
-
-    fixtures: list[Fixture]
-    history: list[History]
-    history_past: list[HistoryPast]
-
-
 class PlayerDetail(BaseModel):
     """Details from player bootstrap-static endpoint."""
 
-    chance_of_playing_next_round: int
-    chance_of_playing_this_round: int
+    chance_of_playing_next_round: int | None
+    chance_of_playing_this_round: int | None
     code: int
     cost_change_event: int
     cost_change_event_fall: int
@@ -123,7 +115,7 @@ class PlayerDetail(BaseModel):
     id: int
     in_dreamteam: bool
     news: str
-    news_added: str
+    news_added: str | None
     now_cost: int
     photo: str
     points_per_game: str
@@ -142,7 +134,7 @@ class PlayerDetail(BaseModel):
     value_form: str
     value_season: str
     web_name: str
-    region: str | None
+    region: int | None
     minutes: int
     goals_scored: int
     assists: int
@@ -195,3 +187,12 @@ class PlayerDetail(BaseModel):
     selected_rank_type: int
     starts_per_90: float
     clean_sheets_per_90: float
+
+
+class PlayerData(BaseModel):
+    """Player data model."""
+
+    player_detail: PlayerDetail = None
+    fixtures: list[Fixture]
+    history: list[History]
+    history_past: list[HistoryPast]

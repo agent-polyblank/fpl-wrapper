@@ -41,7 +41,7 @@ check = "mypy --install-types --non-interactive {args:src/python_project_templat
 source_pkgs = ["fpl", "tests"]
 branch = true
 parallel = true
-omit = ["src/fpl/__about__.py"]
+omit = ["src/fpl/__about__.py", "tests/*"]
 
 [tool.coverage.paths]
 python_project_template = ["src/fpl", "*/fpl/src/fpl"]
