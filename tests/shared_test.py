@@ -1,7 +1,8 @@
+from pydantic import ValidationError
 import pytest
 import httpx
 
-from fpl.models import PlayerData
+from fpl.models import PlayerData, PlayerDetail
 from fpl.shared import get_player_by_id
 
 @pytest.fixture
@@ -112,3 +113,4 @@ def test_get_player_by_id(mock_player_data, monkeypatch):
     
     assert isinstance(player_data, PlayerData)
     
+

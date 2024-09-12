@@ -4,7 +4,7 @@ import json
 
 import httpx
 
-from fpl.models import PlayerData
+from fpl.models import PlayerData, PlayerDetail
 
 
 def get_static_content() -> dict:
@@ -17,6 +17,17 @@ def get_static_content() -> dict:
     """
     url = "https://fantasy.premierleague.com/api/bootstrap-static/"
     return json.loads(httpx.get(url, headers={}, data={}).text)
+
+
+def get_all_player_detail(data: dict[str:any]) -> list[PlayerDetail]:
+    """Get all player details from the FPL API.
+
+    Returns
+    -------
+        list[PlayerDetail]: List of player details.
+
+    """
+    return [PlayerDetail(**player) for player in data["elements"]]
 
 
 def get_picks(team_id: str, gw: str) -> list[dict]:
