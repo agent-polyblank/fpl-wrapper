@@ -36,7 +36,7 @@ def get_picks(client: httpx.Client, team_id: str, gw: str) -> list[dict]:
         team_id (str): Player's team id.
         gw (str): Gameweek number.
 
-    Returns
+    Returns:
     -------
         list[dict]: list of player picks for a specific gameweek.
 
@@ -62,23 +62,32 @@ def get_player_summary(client: httpx.Client, player_id: str) -> httpx.Response:
     return client.get(url)
 
 
-def get_player_by_id(client: httpx.Client, player_id: str) -> PlayerData:
-    """Get player data from the FPL API.
+def get_player_by_id(
+    client: httpx.Client,
+    player_id: int,
+    get_player_summary_func: callable,
+    get_all_player_detail_func: callable,
+) -> PlayerData:
+    """Get player data by player id.
 
     Args:
     ----
-        client (httpx.Client): HTTP client instance.
-        player_id (str): Player id.
+        client (httpx.Client): httpx client instance.
+        player_id (int): player id.
+        get_player_summary_func (callable): get_player_summary function.
+        get_all_player_detail_func (callable): get_all_player_detail function.
 
     Returns:
     -------
-        PlayerData: Player data.
+        PlayerData: PlayerData object.
 
     """
-    player_summary = get_player_summary(client, player_id)
+    player_summary = get_player_summary_func(client, player_id)
+    all_player_details = get_all_player_detail_func(client)
+
     return PlayerData(
-        player_detail=get_all_player_detail(get_static_content())[
+        player_detail=all_player_details[
             player_id - 1
-        ],
+        ],  # Assuming 0-based index for player_id
         **player_summary.json(),
     )

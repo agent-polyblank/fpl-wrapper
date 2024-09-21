@@ -95,14 +95,6 @@ def history_past_data():
         "expected_goals_conceded": "20.0"
     }
 
-@pytest.fixture
-def player_data(fixture_data, history_data, history_past_data):
-    return {
-        "fixtures": [fixture_data],
-        "history": [history_data],
-        "history_past": [history_past_data]
-    }
-
 
 @pytest.fixture
 def player_detail_data():
@@ -196,6 +188,15 @@ def player_detail_data():
         "selected_rank_type": 260,
         "starts_per_90": 0,
         "clean_sheets_per_90": 0
+    }
+
+
+@pytest.fixture
+def player_data(fixture_data, history_data, history_past_data):
+    return {
+        "fixtures": [fixture_data],
+        "history": [history_data],
+        "history_past": [history_past_data]
     }
 
 @pytest.fixture
