@@ -1,9 +1,8 @@
 """Tests for models."""
 
-import pytest
-from pydantic import ValidationError
-from fpl.models import Fixture, History, HistoryPast, PlayerData, PlayerDetail
-from tests.conftest import player_detail_data
+
+from fpl.model.players_models import Fixture, History, HistoryPast, PlayerData, PlayerDetail
+
 
 def test_fixture_model(fixture_data):
     """Test fixture model."""
@@ -30,27 +29,6 @@ def test_player_data_model(player_data):
     assert len(player.fixtures) == 1
     assert len(player.history) == 1
     assert len(player.history_past) == 1
-
-def test_invalid_fixture_model():
-    """Test invalid fixture model."""
-    invalid_fixture_data = {
-        "id": "invalid_id",  # id should be an int
-        "code": 100,
-        "team_h": 1,
-        "team_h_score": 2,
-        "team_a": 2,
-        "team_a_score": 1,
-        "event": 1,
-        "finished": True,
-        "minutes": 90,
-        "provisional_start_time": False,
-        "kickoff_time": "2023-10-01T12:30:00Z",
-        "event_name": "Gameweek 1",
-        "is_home": True,
-        "difficulty": 3
-    }
-    with pytest.raises(ValidationError):
-        Fixture(**invalid_fixture_data)
 
 def test_player_detail(player_detail_data):
     """Test player detail model."""

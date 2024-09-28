@@ -1,16 +1,17 @@
-"""Shared functions for the FPL API."""
+"""Information relating to actual players."""
 
 import json
 
 import httpx
 
-from fpl.models import PlayerData, PlayerDetail
+from fpl.model.players_models import PlayerData, PlayerDetail
 
 
 def get_all_player_detail(
     client: httpx.Client,
 ) -> list[PlayerDetail]:
-    """Get all player details from the FPL API.
+    """
+    Get all player details from the FPL API.
 
     Args:
     ----
@@ -27,26 +28,9 @@ def get_all_player_detail(
     return [PlayerDetail(**player) for player in data["elements"]]
 
 
-def get_picks(client: httpx.Client, team_id: str, gw: str) -> list[dict]:
-    """Get player picks for a specific gameweek.
-
-    Args:
-    ----
-        client (httpx.Client): HTTP client instance.
-        team_id (str): Player's team id.
-        gw (str): Gameweek number.
-
-    Returns:
-    -------
-        list[dict]: list of player picks for a specific gameweek.
-
-    """
-    url = f"https://fantasy.premierleague.com/api/entry/{team_id}/event/{gw}/picks/"
-    return json.loads(client.get(url).text)["picks"]
-
-
 def get_player_summary(client: httpx.Client, player_id: str) -> httpx.Response:
-    """Get player summary from the FPL API.
+    """
+    Get player summary from the FPL API.
 
     Args:
     ----
@@ -68,7 +52,8 @@ def get_player_by_id(
     get_player_summary_func: callable,
     get_all_player_detail_func: callable,
 ) -> PlayerData:
-    """Get player data by player id.
+    """
+    Get player data by player id.
 
     Args:
     ----
@@ -86,8 +71,6 @@ def get_player_by_id(
     all_player_details = get_all_player_detail_func(client)
 
     return PlayerData(
-        player_detail=all_player_details[
-            player_id - 1
-        ],  # Assuming 0-based index for player_id
+        player_detail=all_player_details[player_id - 1],
         **player_summary.json(),
     )

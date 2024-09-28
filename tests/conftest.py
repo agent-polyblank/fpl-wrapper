@@ -1,10 +1,11 @@
 """Fixtures for tests."""
 
-from ensurepip import bootstrap
 import pytest
+
 
 @pytest.fixture
 def fixture_data():
+    """Fixture for player fixture data."""
     return {
         "id": 1,
         "code": 100,
@@ -24,6 +25,7 @@ def fixture_data():
 
 @pytest.fixture
 def history_data():
+    """Fixture for current season data"""
     return {
         "element": 1,
         "fixture": 1,
@@ -65,6 +67,7 @@ def history_data():
 
 @pytest.fixture
 def history_past_data():
+    """Fixture for past season data data."""
     return {
         "season_name": "2022/23",
         "element_code": 1,
@@ -98,6 +101,7 @@ def history_past_data():
 
 @pytest.fixture
 def player_detail_data():
+    """Fixture for player detail data."""
     return {
         "chance_of_playing_next_round": 0,
         "chance_of_playing_this_round": 0,
@@ -201,6 +205,62 @@ def player_data(fixture_data, history_data, history_past_data):
 
 @pytest.fixture
 def bootstrap_data(player_detail_data):
+    """Fixture for bootstrap data."""
     return {
         "elements": [player_detail_data]
     }
+
+@pytest.fixture
+def league_data():
+    """Fixture for league data."""
+    return {
+    "new_entries": {
+        "has_next": False,
+        "page": 1,
+        "results": []
+    },
+    "last_updated_data": "2024-09-28T18:28:41Z",
+    "league": {
+        "id": 507369,
+        "name": "Fish and chips",
+        "created": "2024-07-29T09:57:35.177916Z",
+        "closed": False,
+        "max_entries": None,
+        "league_type": "x",
+        "scoring": "c",
+        "admin_entry": 1581117,
+        "start_event": 1,
+        "code_privacy": "p",
+        "has_cup": True,
+        "cup_league": None,
+        "rank": None
+    },
+    "standings": {
+        "has_next": False,
+        "page": 1,
+        "results": [
+            {
+                "id": 17368194,
+                "event_total": 12,
+                "player_name": "Teagan Erasmus",
+                "rank": 1,
+                "last_rank": 1,
+                "rank_sort": 1,
+                "total": 334,
+                "entry": 1581117,
+                "entry_name": "Upamaguire"
+            },
+            {
+                "id": 36468493,
+                "event_total": 16,
+                "player_name": "Tyler Moss",
+                "rank": 2,
+                "last_rank": 2,
+                "rank_sort": 2,
+                "total": 262,
+                "entry": 743451,
+                "entry_name": "CPT!CITYZENS"
+            }
+        ]
+    }
+}

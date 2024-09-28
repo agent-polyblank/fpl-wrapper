@@ -2,8 +2,10 @@ import httpx
 import json
 from unittest.mock import MagicMock, Mock
 from pydantic import ValidationError
-from fpl.models import PlayerData
-from fpl.shared import get_all_player_detail, get_player_by_id
+
+from fpl.model.players_models import PlayerData
+from fpl.players import get_all_player_detail, get_player_by_id
+
 
 def test_get_all_player_detail(mocker, bootstrap_data):
     # Mock the httpx.Client.get method to return this mock response

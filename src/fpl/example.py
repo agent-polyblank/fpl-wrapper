@@ -2,7 +2,8 @@
 
 
 def greeting(name: str) -> str:
-    """Generate a greeting string.
+    """
+    Generate a greeting string.
 
     Args:
     ----

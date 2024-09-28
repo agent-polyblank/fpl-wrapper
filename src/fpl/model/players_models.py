@@ -1,4 +1,4 @@
-"""Models for the FPL API."""
+"""Models for player data."""
 
 from pydantic import BaseModel
 
