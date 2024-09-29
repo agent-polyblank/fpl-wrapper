@@ -1,7 +1,5 @@
 from httpx import get
-import httpx
-from fpl.managers import get_manager_gw_data
-from fpl.model.managers_models import LeagueData
+from fpl.model.managers_models import LeagueData, TeamData
 
 
 def test_league_data_model(league_data):
@@ -11,6 +9,7 @@ def test_league_data_model(league_data):
     assert len(league.standings.results) == 50
 
 
-def test_get_manager_gw_data():
-    """Test get picks."""
-    pass
+def test_team_data(picks_data):
+    """Test TeamData model."""
+    team_data = TeamData(**picks_data)
+    assert team_data is not None

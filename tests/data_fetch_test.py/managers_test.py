@@ -1,9 +1,7 @@
 from unittest.mock import Mock
 import httpx
 
-from fpl.managers import get_league_data, get_manager_gw_data
-from fpl.players import get_all_player_detail, get_player_by_id, get_player_summary
-
+from fpl.data_fetch.managers import get_league_data, get_manager_gw_data
 
 def test_get_league_data(league_data):
     """Test get league data function."""

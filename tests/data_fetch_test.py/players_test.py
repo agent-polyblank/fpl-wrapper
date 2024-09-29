@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, Mock
 from pydantic import ValidationError
 
 from fpl.model.players_models import PlayerData
-from fpl.players import get_all_player_detail, get_player_by_id
+from fpl.data_fetch.players import get_all_player_detail, get_player_by_id
 
 
 def test_get_all_player_detail(mocker, bootstrap_data):
