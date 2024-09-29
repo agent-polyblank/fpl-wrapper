@@ -1,7 +1,6 @@
 import httpx
 import json
 from unittest.mock import MagicMock, Mock
-from pydantic import ValidationError
 
 from fpl.model.players_models import PlayerData
 from fpl.data_fetch.players import get_all_player_detail, get_player_by_id
