@@ -23,7 +23,7 @@ class League(BaseModel):
     max_entries: int | None
     league_type: str
     scoring: str
-    admin_entry: int
+    admin_entry: int | None
     start_event: int
     code_privacy: str
     has_cup: bool

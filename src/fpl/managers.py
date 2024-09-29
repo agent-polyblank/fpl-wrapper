@@ -5,23 +5,25 @@ import httpx
 from fpl.model.managers_models import LeagueData, TeamData
 
 
-def get_league_data(client: httpx.Client, league_id: str) -> LeagueData:
+def get_league_data(
+    client: httpx.Client, league_id: str, page: int
+) -> LeagueData:
     """
-    Get league data.
+    Get league data and standings. This data is paginated.
 
     Args:
     ----
         client (httpx.Client): HTTP client instance.
         league_id (str): League id.
+        page (int): Page number.
 
     Returns:
     -------
         dict: League data.
 
     """
-    url = f"https://fantasy.premierleague.com/api/leagues-classic/{league_id}/standings/"
-    response = client.get(url)
-    return LeagueData.model_validate_json(response.text)
+    url = f"https://fantasy.premierleague.com/api/leagues-classic/{league_id}/standings/?page_new_entries=1&page_standings={page}&phase=1"
+    return LeagueData.model_validate_json(client.get(url).text)
 
 
 def get_manager_gw_data(
