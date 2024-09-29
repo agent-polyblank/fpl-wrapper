@@ -3,34 +3,30 @@ import json
 from unittest.mock import MagicMock, Mock
 
 from fpl.model.players_models import PlayerData
-from fpl.data_fetch.players import get_all_player_detail, get_player_by_id
+from fpl.data_fetch.players import get_bootstrap_data, get_player_by_id, get_players, get_teams
 
 
-def test_get_all_player_detail(mocker, bootstrap_data):
+def test_get_bootstrap_data(mocker, players_bootstrap_data):
     """Test the get_all_player_detail function with mocked dependencies."""
 
-    # Mock the httpx.Client.get method to return this mock response
     mocker.patch(
         "httpx.Client.get",
-        return_value=MagicMock(text=json.dumps(bootstrap_data)),
+        return_value=MagicMock(text=json.dumps(players_bootstrap_data)),
     )
 
-    # Create a client instance
     client = httpx.Client()
 
-    # Call the function
-    result = get_all_player_detail(client)
+    result = get_bootstrap_data(client)
 
-    # Verify the result is a list with one PlayerDetail object
     assert len(result) == len(
-        bootstrap_data["elements"]
-    )  # Match length of data
-    player = result[0]
-    assert player.id == 1
-    assert player.first_name == "Fábio"
+        players_bootstrap_data["elements"]
+    )
+    player = result["elements"][0]
+    assert player["id"] == 1
+    assert player["first_name"] == "Fábio"
 
 
-def test_get_player_by_id(player_data, bootstrap_data):
+def test_get_player_by_id(player_data, players_bootstrap_data):
     """Test the get_player_by_id function with mocked dependencies."""
 
     client = httpx.Client()
@@ -39,7 +35,7 @@ def test_get_player_by_id(player_data, bootstrap_data):
     mock_get_player_summary.return_value.json.return_value = player_data
 
     mock_get_all_player_detail = Mock()
-    mock_get_all_player_detail.return_value = bootstrap_data["elements"]
+    mock_get_all_player_detail.return_value = players_bootstrap_data["elements"]
 
     player_id = 1
 
@@ -54,3 +50,16 @@ def test_get_player_by_id(player_data, bootstrap_data):
     # Assert that the result is an instance of PlayerData
     assert isinstance(result, PlayerData)
     assert result.player_detail.web_name == "Fábio Vieira"
+
+def test_get_players(players_bootstrap_data):
+    """Test the get_players function."""
+    players = get_players(players_bootstrap_data)
+    assert len(players) == 1
+    assert players[0].web_name == "Fábio Vieira"
+
+def test_get_clubs(team_bootstrap_data):
+    """Test the get_teams function."""
+    teams = get_teams(team_bootstrap_data)
+    assert len(teams) == 2
+    assert teams[0].name == "Nott'm Forest"
+    assert teams[1].name == "Newcastle"

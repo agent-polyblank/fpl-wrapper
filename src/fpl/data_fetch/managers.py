@@ -2,7 +2,7 @@
 
 import httpx
 
-from fpl.model.managers_models import LeagueData, TeamData
+from fpl.model.managers_models import LeagueData, ManagerTeamData
 
 
 def get_league_data(
@@ -28,7 +28,7 @@ def get_league_data(
 
 def get_manager_gw_data(
     client: httpx.Client, team_id: str, gw: str
-) -> TeamData:
+) -> ManagerTeamData:
     """
     Get player picks for a specific gameweek.
 
@@ -44,4 +44,4 @@ def get_manager_gw_data(
 
     """
     url = f"https://fantasy.premierleague.com/api/entry/{team_id}/event/{gw}/picks/"
-    return TeamData.model_validate_json(client.get(url).text)
+    return ManagerTeamData.model_validate_json(client.get(url).text)

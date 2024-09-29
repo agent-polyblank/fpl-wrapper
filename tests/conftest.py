@@ -207,7 +207,7 @@ def player_data(fixture_data, history_data, history_past_data):
 
 
 @pytest.fixture
-def bootstrap_data(player_detail_data):
+def players_bootstrap_data(player_detail_data):
     """Fixture for bootstrap data."""
     return {"elements": [player_detail_data]}
 
@@ -920,6 +920,7 @@ def picks_data_no_chip():
         ],
     }
 
+
 @pytest.fixture
 def picks_data_wildcard():
     return {
@@ -1046,4 +1047,67 @@ def picks_data_wildcard():
                 "is_vice_captain": False,
             },
         ],
+    }
+
+
+@pytest.fixture
+def team_fixture_forest():
+    return {
+        "code": 17,
+        "draw": 0,
+        "form": None,
+        "id": 16,
+        "loss": 0,
+        "name": "Nott'm Forest",
+        "played": 0,
+        "points": 0,
+        "position": 0,
+        "short_name": "NFO",
+        "strength": 3,
+        "team_division": None,
+        "unavailable": False,
+        "win": 0,
+        "strength_overall_home": 1090,
+        "strength_overall_away": 1100,
+        "strength_attack_home": 1085,
+        "strength_attack_away": 1115,
+        "strength_defence_home": 1090,
+        "strength_defence_away": 1090,
+        "pulse_id": 15,
+    }
+
+
+@pytest.fixture
+def team_fixture_newcastle():
+    return {
+            "code": 4,
+            "draw": 0,
+            "form": None,
+            "id": 15,
+            "loss": 0,
+            "name": "Newcastle",
+            "played": 0,
+            "points": 0,
+            "position": 0,
+            "short_name": "NEW",
+            "strength": 4,
+            "team_division": None,
+            "unavailable": False,
+            "win": 0,
+            "strength_overall_home": 1130,
+            "strength_overall_away": 1285,
+            "strength_attack_home": 1100,
+            "strength_attack_away": 1185,
+            "strength_defence_home": 1160,
+            "strength_defence_away": 1380,
+            "pulse_id": 23,
+    }
+
+@pytest.fixture
+def team_bootstrap_data(team_fixture_forest, team_fixture_newcastle):
+    return {
+        "teams": [
+            team_fixture_forest,
+            team_fixture_newcastle,
+        ]
     }

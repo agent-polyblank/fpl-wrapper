@@ -99,7 +99,7 @@ class ChipsEnum(StrEnum):
     wildcard = "wildcard"
 
 
-class TeamData(BaseModel):
+class ManagerTeamData(BaseModel):
     """Model for team data."""
 
     active_chip: ChipsEnum | None
