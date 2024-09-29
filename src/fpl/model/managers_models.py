@@ -1,6 +1,7 @@
 """Models for the FPL API."""
 
 from datetime import datetime
+from enum import StrEnum
 
 from pydantic import BaseModel
 
@@ -89,10 +90,19 @@ class Pick(BaseModel):
     is_vice_captain: bool
 
 
+class ChipsEnum(StrEnum):
+    """Enum for chips."""
+
+    bench_boost = "bboost"
+    free_hit = "freehit"
+    triple_captain = "3xc"
+    wildcard = "wildcard"
+
+
 class TeamData(BaseModel):
     """Model for team data."""
 
-    active_chip: str | None
+    active_chip: ChipsEnum | None
     automatic_subs: list[dict]
     entry_history: EntryHistory
     picks: list[Pick]

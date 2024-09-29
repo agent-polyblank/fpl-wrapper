@@ -7,6 +7,8 @@ from fpl.data_fetch.players import get_all_player_detail, get_player_by_id
 
 
 def test_get_all_player_detail(mocker, bootstrap_data):
+    """Test the get_all_player_detail function with mocked dependencies."""
+
     # Mock the httpx.Client.get method to return this mock response
     mocker.patch(
         "httpx.Client.get",

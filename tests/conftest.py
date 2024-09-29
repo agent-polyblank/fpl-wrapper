@@ -793,9 +793,137 @@ def league_data():
 
 
 @pytest.fixture
-def picks_data():
+def picks_data_no_chip():
     return {
         "active_chip": None,
+        "automatic_subs": [],
+        "entry_history": {
+            "event": 1,
+            "points": 54,
+            "total_points": 54,
+            "rank": 5141847,
+            "rank_sort": 5141847,
+            "overall_rank": 5141845,
+            "percentile_rank": 60,
+            "bank": 5,
+            "value": 1000,
+            "event_transfers": 0,
+            "event_transfers_cost": 0,
+            "points_on_bench": 5,
+        },
+        "picks": [
+            {
+                "element": 201,
+                "position": 1,
+                "multiplier": 1,
+                "is_captain": False,
+                "is_vice_captain": False,
+            },
+            {
+                "element": 422,
+                "position": 2,
+                "multiplier": 1,
+                "is_captain": False,
+                "is_vice_captain": False,
+            },
+            {
+                "element": 3,
+                "position": 3,
+                "multiplier": 1,
+                "is_captain": False,
+                "is_vice_captain": False,
+            },
+            {
+                "element": 333,
+                "position": 4,
+                "multiplier": 1,
+                "is_captain": False,
+                "is_vice_captain": False,
+            },
+            {
+                "element": 366,
+                "position": 5,
+                "multiplier": 1,
+                "is_captain": False,
+                "is_vice_captain": False,
+            },
+            {
+                "element": 317,
+                "position": 6,
+                "multiplier": 1,
+                "is_captain": False,
+                "is_vice_captain": False,
+            },
+            {
+                "element": 54,
+                "position": 7,
+                "multiplier": 1,
+                "is_captain": False,
+                "is_vice_captain": False,
+            },
+            {
+                "element": 17,
+                "position": 8,
+                "multiplier": 1,
+                "is_captain": False,
+                "is_vice_captain": True,
+            },
+            {
+                "element": 351,
+                "position": 9,
+                "multiplier": 1,
+                "is_captain": False,
+                "is_vice_captain": False,
+            },
+            {
+                "element": 401,
+                "position": 10,
+                "multiplier": 2,
+                "is_captain": True,
+                "is_vice_captain": False,
+            },
+            {
+                "element": 82,
+                "position": 11,
+                "multiplier": 1,
+                "is_captain": False,
+                "is_vice_captain": False,
+            },
+            {
+                "element": 536,
+                "position": 12,
+                "multiplier": 0,
+                "is_captain": False,
+                "is_vice_captain": False,
+            },
+            {
+                "element": 19,
+                "position": 13,
+                "multiplier": 0,
+                "is_captain": False,
+                "is_vice_captain": False,
+            },
+            {
+                "element": 255,
+                "position": 14,
+                "multiplier": 0,
+                "is_captain": False,
+                "is_vice_captain": False,
+            },
+            {
+                "element": 275,
+                "position": 15,
+                "multiplier": 0,
+                "is_captain": False,
+                "is_vice_captain": False,
+            },
+        ],
+    }
+
+@pytest.fixture
+def picks_data_wildcard():
+    return {
+        "active_chip": "wildcard",
         "automatic_subs": [],
         "entry_history": {
             "event": 1,

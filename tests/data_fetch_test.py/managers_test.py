@@ -16,12 +16,12 @@ def test_get_league_data(league_data):
     assert result.league.name == "Arsenal"
 
 
-def test_get_manager_gw_data(picks_data):
+def test_get_manager_gw_data(picks_data_no_chip):
     """Test get_manager_gw_data function."""
     client = httpx.Client()
 
     mock_get_player_summary = Mock()
-    mock_get_player_summary.return_value.json.return_value = picks_data
+    mock_get_player_summary.return_value.json.return_value = picks_data_no_chip
 
     # Call the function with mocks
     result = get_manager_gw_data(client=client, team_id=1, gw=1)
