@@ -2,8 +2,6 @@
 
 from argparse import ArgumentParser
 
-from fpl.example import greeting
-
 
 def main() -> None:
     """FPL entry."""
@@ -15,5 +13,4 @@ def main() -> None:
         dest="arg_dest",
         required=True,
     )
-    args = parser.parse_args()
-    greeting(args.greeting)
+    _ = parser.parse_args()
