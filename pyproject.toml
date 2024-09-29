@@ -3,7 +3,14 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-dependencies = ["httpx", "pytest", "pytest-cov", "pytest-mock", "pydantic"]
+dependencies = [
+  "httpx",
+  "pytest",
+  "pytest-cov",
+  "coverage[toml]",
+  "pytest-mock",
+  "pydantic",
+]
 
 name = "fpl"
 dynamic = ["version"]
@@ -41,7 +48,11 @@ check = "mypy --install-types --non-interactive {args:src/python_project_templat
 source_pkgs = ["fpl", "tests"]
 branch = true
 parallel = true
-omit = ["src/fpl/__about__.py", "tests/*"]
+omit = ["src/fpl/__about__.py", "tests/*", "**/__init__.py"]
+
+[tool.hatch.envs.test.scripts]
+run-coverage = "pytest --cov-config=pyproject.toml --cov=pkg --cov=tests --cov-report xml:coverage.xml"
+run = "run-coverage --no-cov"
 
 [tool.coverage.paths]
 python_project_template = ["src/fpl", "*/fpl/src/fpl"]
@@ -141,3 +152,6 @@ docstring-code-line-length = "dynamic"
 # Allow pytest to pick up source directory.
 [tool.pytest.ini_options]
 pythonpath = [".", "src"]
+
+[tool.coverage.xml]
+output = "coverage.xml"
