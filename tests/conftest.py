@@ -2,6 +2,8 @@
 
 import pytest
 
+from fpl.model.managers_models import ManagerTeamData
+
 
 @pytest.fixture
 def fixture_data():
@@ -1080,28 +1082,29 @@ def team_fixture_forest():
 @pytest.fixture
 def team_fixture_newcastle():
     return {
-            "code": 4,
-            "draw": 0,
-            "form": None,
-            "id": 15,
-            "loss": 0,
-            "name": "Newcastle",
-            "played": 0,
-            "points": 0,
-            "position": 0,
-            "short_name": "NEW",
-            "strength": 4,
-            "team_division": None,
-            "unavailable": False,
-            "win": 0,
-            "strength_overall_home": 1130,
-            "strength_overall_away": 1285,
-            "strength_attack_home": 1100,
-            "strength_attack_away": 1185,
-            "strength_defence_home": 1160,
-            "strength_defence_away": 1380,
-            "pulse_id": 23,
+        "code": 4,
+        "draw": 0,
+        "form": None,
+        "id": 15,
+        "loss": 0,
+        "name": "Newcastle",
+        "played": 0,
+        "points": 0,
+        "position": 0,
+        "short_name": "NEW",
+        "strength": 4,
+        "team_division": None,
+        "unavailable": False,
+        "win": 0,
+        "strength_overall_home": 1130,
+        "strength_overall_away": 1285,
+        "strength_attack_home": 1100,
+        "strength_attack_away": 1185,
+        "strength_defence_home": 1160,
+        "strength_defence_away": 1380,
+        "pulse_id": 23,
     }
+
 
 @pytest.fixture
 def team_bootstrap_data(team_fixture_forest, team_fixture_newcastle):
@@ -1111,3 +1114,9 @@ def team_bootstrap_data(team_fixture_forest, team_fixture_newcastle):
             team_fixture_newcastle,
         ]
     }
+
+
+@pytest.fixture
+def player_picks(picks_data_wildcard, picks_data_no_chip):
+    """Fixture for test_get_player_analysis."""
+    return [ManagerTeamData(**picks_data_no_chip), ManagerTeamData(**picks_data_wildcard)]

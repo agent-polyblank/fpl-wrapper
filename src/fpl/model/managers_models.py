@@ -90,6 +90,15 @@ class Pick(BaseModel):
     is_vice_captain: bool
 
 
+class Formation(BaseModel):
+    """Model for formation."""
+
+    attackers: int
+    midfielders: int
+    defenders: int
+    goalkeepers: int = 1
+
+
 class ChipsEnum(StrEnum):
     """Enum for chips."""
 
