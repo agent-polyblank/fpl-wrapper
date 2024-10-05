@@ -9,7 +9,7 @@ from fpl.model.players_models import Club, PlayerData, PlayerDetail
 
 def get_bootstrap_data(
     client: httpx.Client,
-) -> list[PlayerDetail]:
+) -> dict[str, any]:
     """
     Get all player details from the FPL API.
 
@@ -27,7 +27,7 @@ def get_bootstrap_data(
     return json.loads(client.get(url).text)
 
 
-def get_players(data: dict[str, any]) -> list[PlayerDetail]:
+def get_players(data: dict[str, any]) -> dict[int, PlayerDetail]:
     """
     Get all players in league.
 
@@ -40,7 +40,7 @@ def get_players(data: dict[str, any]) -> list[PlayerDetail]:
         list[PlayerDetail]: Details of all players in the league.
 
     """
-    return [PlayerDetail(**player) for player in data["elements"]]
+    return {player["id"]: PlayerDetail(**player) for player in data["elements"]}
 
 
 def get_teams(data: dict[str, any]) -> list[Club]:
@@ -80,8 +80,7 @@ def get_player_summary(client: httpx.Client, player_id: str) -> httpx.Response:
 def get_player_by_id(
     client: httpx.Client,
     player_id: int,
-    get_player_summary_func: callable,
-    get_all_player_detail_func: callable,
+    bootstrap_data: list[PlayerDetail],
 ) -> PlayerData:
     """
     Get player data by player id.
@@ -90,18 +89,16 @@ def get_player_by_id(
     ----
         client (httpx.Client): httpx client instance.
         player_id (int): player id.
-        get_player_summary_func (callable): get_player_summary function.
-        get_all_player_detail_func (callable): get_all_player_detail function.
+        bootstrap_data(list[PlayerDetail]): List of player details.
 
     Returns:
     -------
         PlayerData: PlayerData object.
 
     """
-    player_summary = get_player_summary_func(client, player_id)
-    all_player_details = get_all_player_detail_func(client)
+    player_summary = get_player_summary(client, player_id)
 
     return PlayerData(
-        player_detail=all_player_details[player_id - 1],
+        player_detail=bootstrap_data[player_id],
         **player_summary.json(),
     )

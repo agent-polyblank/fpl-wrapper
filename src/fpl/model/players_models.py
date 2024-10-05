@@ -1,6 +1,6 @@
 """Models for player data."""
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class Fixture(BaseModel):
@@ -132,7 +132,7 @@ class PlayerDetail(BaseModel):
     cost_change_start: int
     cost_change_start_fall: int
     dreamteam_count: int
-    element_type: int
+    element_type: int  # Integer representation of position
     ep_next: str
     ep_this: str
     event_points: int
@@ -213,6 +213,23 @@ class PlayerDetail(BaseModel):
     selected_rank_type: int
     starts_per_90: float
     clean_sheets_per_90: float
+
+    # A property to store the player's position based on element_type
+    position: str = Field(default="Unknown", init=False)
+
+    def model_post_init(self, __context) -> None:  # noqa: ANN001
+        """Set the player's position based on element_type."""
+        match self.element_type:
+            case 1:
+                self.position = "Goalkeeper"
+            case 2:
+                self.position = "Defender"
+            case 3:
+                self.position = "Midfielder"
+            case 4:
+                self.position = "Forward"
+            case _:
+                self.position = "Unknown"
 
 
 class PlayerData(BaseModel):

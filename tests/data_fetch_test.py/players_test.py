@@ -40,12 +40,7 @@ def test_get_player_by_id(player_data, players_bootstrap_data):
     player_id = 1
 
     # Call the function with mocks
-    result = get_player_by_id(
-        client=client,
-        player_id=player_id,
-        get_player_summary_func=mock_get_player_summary,
-        get_all_player_detail_func=mock_get_all_player_detail,
-    )
+    result = get_player_by_id(client=client, player_id=player_id,bootstrap_data=get_players(players_bootstrap_data))
 
     # Assert that the result is an instance of PlayerData
     assert isinstance(result, PlayerData)
@@ -55,7 +50,8 @@ def test_get_players(players_bootstrap_data):
     """Test the get_players function."""
     players = get_players(players_bootstrap_data)
     assert len(players) == 1
-    assert players[0].web_name == "Fábio Vieira"
+    assert players[1].web_name == "Fábio Vieira"
+    assert players[1].position == "Midfielder"
 
 def test_get_clubs(team_bootstrap_data):
     """Test the get_teams function."""
