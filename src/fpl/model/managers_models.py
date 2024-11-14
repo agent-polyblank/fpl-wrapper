@@ -5,6 +5,8 @@ from enum import StrEnum
 
 from pydantic import BaseModel
 
+from fpl.model.players_models import PlayerData
+
 
 class NewEntry(BaseModel):
     """New entry model."""
@@ -98,6 +100,16 @@ class Formation(BaseModel):
     defenders: int
     goalkeepers: int = 1
 
+    def __str__(self) -> str:
+        """Get string representation."""
+        return f"{self.attackers}-{self.midfielders}-{self.defenders}-{self.goalkeepers}"  # noqa: E501
+
+    def __hash__(self) -> int:
+        """Hash based on attributes."""
+        return hash(
+            (self.attackers, self.midfielders, self.defenders, self.goalkeepers)
+        )
+
 
 class ChipsEnum(StrEnum):
     """Enum for chips."""
@@ -115,3 +127,12 @@ class ManagerTeamData(BaseModel):
     automatic_subs: list[dict]
     entry_history: EntryHistory
     picks: list[Pick]
+
+
+class PlayerTeam(BaseModel):
+    """Player team model."""
+
+    Goalkeepers: list[PlayerData] = []
+    Defenders: list[PlayerData] = []
+    Midfielders: list[PlayerData] = []
+    Forwards: list[PlayerData] = []

@@ -1,6 +1,21 @@
 """Models for player data."""
 
+from enum import IntEnum
+
 from pydantic import BaseModel, Field
+
+
+class PositionEnum(IntEnum):
+    """Enum for player positions."""
+
+    Goalkeeper = 1
+    Defender = 2
+    Midfielder = 3
+    Forward = 4
+
+    def __str__(self) -> str:
+        """Get string representation."""
+        return self.name.capitalize()
 
 
 class Fixture(BaseModel):
@@ -219,17 +234,7 @@ class PlayerDetail(BaseModel):
 
     def model_post_init(self, __context) -> None:  # noqa: ANN001
         """Set the player's position based on element_type."""
-        match self.element_type:
-            case 1:
-                self.position = "Goalkeeper"
-            case 2:
-                self.position = "Defender"
-            case 3:
-                self.position = "Midfielder"
-            case 4:
-                self.position = "Forward"
-            case _:
-                self.position = "Unknown"
+        self.position = PositionEnum(self.element_type).name
 
 
 class PlayerData(BaseModel):

@@ -70,6 +70,8 @@ installer = "uv"
 
 [project.scripts]
 fpl = "fpl.entry_points:main"
+average-team = "fpl.entry_points:average_team"
+
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
@@ -102,6 +104,7 @@ exclude = [
   ".venv",
   "venv",
   "tests",
+  "__init__.py",
 ]
 
 # Same as Black.
