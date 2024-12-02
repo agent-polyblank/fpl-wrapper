@@ -36,6 +36,7 @@ Documentation = "https://github.com/agent-polyblank/fpl#readme"
 Issues = "https://github.com/agent-polyblank/fpl#issues"
 Source = "https://github.com/agent-polyblank/fpl"
 
+
 [tool.hatch.version]
 path = "src/fpl/__about__.py"
 
@@ -50,9 +51,17 @@ branch = true
 parallel = true
 omit = ["src/fpl/__about__.py", "tests/*", "**/__init__.py"]
 
+[tool.hatch.envs.test]
+dependencies = ["pytest", "pytest-cov", "pytest-watcher"]
+
 [tool.hatch.envs.test.scripts]
-run-coverage = "pytest --cov-config=pyproject.toml --cov=pkg --cov=tests --cov-report xml:coverage.xml"
-run = "run-coverage --no-cov"
+test = "pytest {args:tests}"
+test-cov = "coverage run -m pytest {args:tests}"
+cov-report = ["- coverage combine", "coverage report"]
+cov = ["test-cov", "cov-report"]
+cov-xml = ["cov", "coverage xml"]
+cov-html = ["cov", "coverage html"]
+
 
 [tool.coverage.paths]
 python_project_template = ["src/fpl", "*/fpl/src/fpl"]
@@ -155,6 +164,3 @@ docstring-code-line-length = "dynamic"
 # Allow pytest to pick up source directory.
 [tool.pytest.ini_options]
 pythonpath = [".", "src"]
-
-[tool.coverage.xml]
-output = "coverage.xml"
