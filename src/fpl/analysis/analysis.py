@@ -5,15 +5,14 @@ import httpx
 from fpl.data_fetch.managers import get_manager_gw_data
 from fpl.data_fetch.players import (
     get_player_by_id,
-    get_players,
 )
-from fpl.model.data_analysis import PlayerCount
+from fpl.model.data_analysis import GameweekRange, PlayerCount
 from fpl.model.managers_models import (
     Formation,
     ManagerTeamData,
     PlayerTeam,
 )
-from fpl.model.players_models import PlayerData, PositionEnum
+from fpl.model.players_models import PlayerData, PlayerDetail, PositionEnum
 
 
 def count_player_picks(gw_picks: list[ManagerTeamData]) -> PlayerCount:
@@ -31,48 +30,41 @@ def count_player_picks(gw_picks: list[ManagerTeamData]) -> PlayerCount:
     """
     player_counts = PlayerCount()
     for gameweek in gw_picks:
-        for pick in gameweek.picks:
+        for pick in gameweek.picks[0:11]:
             player_counts[pick.element] = player_counts.get(pick.element, 0) + 1
     return player_counts
 
 
 def get_most_common_formation(
-    player_id: int,
-    gameweek_from: int,
-    gameweek_to: int,
-    bootstrap_data: dict,
+    player_picks: list[ManagerTeamData],
+    player_data: dict[int, PlayerDetail],
+    client: httpx.Client,
 ) -> Formation:
     """
     Get the player's most common team formation for a given period.
 
     Args:
     ----
-        player_id (int): Player ID.
-        gameweek_from (int): Start gameweek.
-        gameweek_to (int): End gameweek.
-        bootstrap_data (dict): Static content data.
+        player_id (int): Player Id.
+        gameweek_range (GameweekRange): Range of gameweeks.
+        player_picks (dict[int, PlayerDetail]): List of player picks.
+        player_data (dict[int:any]): Static player data.
+        client (httpx.Client): httpx client.
 
     Returns:
     -------
-        Formation: Most common team formation over the specified gameweeks.
+        Formation: Average player formation for gameeweek range.
 
     """
-    client = httpx.Client()
-    player_picks: list[ManagerTeamData] = [
-        get_manager_gw_data(client, player_id, gameweek)
-        for gameweek in range(gameweek_from, gameweek_to + 1)
-    ]
-    bootstrap_data = get_players(bootstrap_data)
-
     formations = []
 
     for gameweek in player_picks:
         formation = Formation(
             attackers=0, midfielders=0, defenders=0, goalkeepers=0
         )
-        for player in gameweek.picks[0:11]:
+        for player in gameweek.picks[0:11]:  # Only select the starting XI
             player_detail = get_player_by_id(
-                client, player.element, bootstrap_data
+                client, player.element, player_data
             )
             position = player_detail.player_detail.element_type
             match position:
@@ -89,44 +81,32 @@ def get_most_common_formation(
 
 
 def get_player_average_team(
-    player_id: int,
-    gameweek_from: int,
-    gameweek_to: int,
     formation: Formation,
-    bootstrap_data: dict,
-) -> list[PlayerData]:
+    player_data: dict[int, PlayerDetail],
+    player_picks: list[ManagerTeamData],
+    client: httpx.Client,
+) -> PlayerTeam:
     """
     Get the player's average team for a given period.
 
     Args:
     ----
-        player_id (int): Player ID.
-        gameweek_from (int): gameweek_from.
-        gameweek_to (int): game week to.
         formation (Formation): Formation.
-        bootstrap_data (dict): Static content data.
+        player_data (dict[int, PlayerDetail]): Static content data.
+        client(httpx.Client): httpx client.
+        player_picks(list[ManagerTeamData]): Player picks per gameweek.
 
     Returns:
     -------
-        list[PlayerData]: Average team.
+        PlayerTeam: Average team for given period.
 
     """
-    client = httpx.Client()
-    player_picks: list[ManagerTeamData] = [
-        get_manager_gw_data(client, player_id, gameweek)
-        for gameweek in range(gameweek_from, gameweek_to + 1)
-    ]
-
     counts: PlayerCount = count_player_picks(player_picks)
 
     players_sorted = sort_player_by_count(counts)
 
-    # get each player's details
-    bootstrap_data = get_players(bootstrap_data)
-
     player_detail = [
-        get_player_by_id(client, pid[0], bootstrap_data)
-        for pid in players_sorted
+        get_player_by_id(client, pid[0], player_data) for pid in players_sorted
     ]
 
     position_limits = {
@@ -148,17 +128,43 @@ def get_player_average_team(
     for player in player_detail:
         position = player.player_detail.position
         if position_counts[position] < position_limits[position]:
+            position_counts[position] += 1
             match player.player_detail.element_type:
                 case PositionEnum.Goalkeeper:
-                    player_team.Goalkeepers.append(player)
+                    player_team.goalkeepers.append(player)
                 case PositionEnum.Defender:
-                    player_team.Defenders.append(player)
+                    player_team.defenders.append(player)
                 case PositionEnum.Midfielder:
-                    player_team.Midfielders.append(player)
+                    player_team.midfielders.append(player)
                 case PositionEnum.Forward:
-                    player_team.Forwards.append(player)
+                    player_team.forwards.append(player)
 
     return player_team
+
+
+def get_player_picks(
+    player_id: int, gameweek_range: GameweekRange, client: httpx.Client
+) -> list[ManagerTeamData]:
+    """
+    Get player picks for gameweek range.
+
+    Args:
+    ----
+        player_id (int): Player Id.
+        gameweek_range (GameweekRange): Range of gameweeks to get picks for.
+        client (httpx.Client): httpx client.
+
+    Returns:
+    -------
+        list[ManagerTeamData]: All player picks in a given period.
+
+    """
+    return [
+        get_manager_gw_data(client, player_id, gameweek)
+        for gameweek in range(
+            gameweek_range.gameweek_from, gameweek_range.gameweek_to
+        )
+    ]
 
 
 def sort_player_by_count(counts: PlayerCount) -> list[PlayerData]:

@@ -1,12 +1,18 @@
 """Entry point for module fpl."""
 
+import logging
 from argparse import ArgumentParser
 
 import httpx
 
-from fpl.analysis.analysis import get_player_average_team
-from fpl.data_fetch.players import get_bootstrap_data
+from fpl.analysis.analysis import (
+    get_most_common_formation,
+    get_player_average_team,
+    get_player_picks,
+)
+from fpl.data_fetch.players import get_bootstrap_data, get_players
 from fpl.input_parsing.parse_formation import parse_formation
+from fpl.model.data_analysis import GameweekRange
 
 
 def main() -> None:
@@ -24,7 +30,7 @@ def main() -> None:
 
 def average_team() -> None:
     """Get a player's average team."""
-    parser = ArgumentParser("average_team")
+    parser = ArgumentParser("Average Team")
     parser.add_argument(
         "--player_id",
         help="Player ID",
@@ -50,14 +56,39 @@ def average_team() -> None:
         "--formation",
         help="Formation",
         dest="formation",
-        required=True,
+        required=False,
     )
+
+    logging.basicConfig(level=logging.INFO)
+
     args = parser.parse_args()
 
-    get_player_average_team(
+    client = httpx.Client()
+
+    player_picks = get_player_picks(
         args.player_id,
-        args.gameweek_from,
-        args.gameweek_to,
-        parse_formation(args.formation),
-        bootstrap_data=get_bootstrap_data(client=httpx.Client()),
+        gameweek_range=GameweekRange(
+            gameweek_from=args.gameweek_from, gameweek_to=args.gameweek_to
+        ),
+        client=client,
     )
+
+    player_data = get_players(get_bootstrap_data(client=client))
+
+    if args.formation:
+        formation = parse_formation(args.formation)
+    else:
+        formation = get_most_common_formation(
+            player_picks=player_picks,
+            player_data=player_data,
+            client=client,
+        )
+
+    average_team = get_player_average_team(
+        formation=formation,
+        player_data=player_data,
+        player_picks=player_picks,
+        client=client,
+    )
+
+    logging.info("%s", average_team.__str__())

@@ -132,7 +132,35 @@ class ManagerTeamData(BaseModel):
 class PlayerTeam(BaseModel):
     """Player team model."""
 
-    Goalkeepers: list[PlayerData] = []
-    Defenders: list[PlayerData] = []
-    Midfielders: list[PlayerData] = []
-    Forwards: list[PlayerData] = []
+    goalkeepers: list[PlayerData] = []
+    defenders: list[PlayerData] = []
+    midfielders: list[PlayerData] = []
+    forwards: list[PlayerData] = []
+
+    def __str__(self) -> str:
+        """Str representation."""
+        str_output = ""
+        count = 1
+        for i, goalkeeper in enumerate(self.goalkeepers):
+            str_output += (
+                f"{count + i} : {goalkeeper.player_detail.web_name} \n"
+            )
+        count += len(self.goalkeepers)
+
+        for i, midfielder in enumerate(self.defenders):
+            str_output += (
+                f"{count + i} : {midfielder.player_detail.web_name} \n"
+            )
+
+        count += len(self.defenders)
+
+        for i, midfielder in enumerate(self.midfielders):
+            str_output += (
+                f"{count + i} : {midfielder.player_detail.web_name} \n"
+            )
+
+        count += len(self.midfielders)
+
+        for i, forward in enumerate(self.forwards):
+            str_output += f"{count + i} : {forward.player_detail.web_name} \n"
+        return str_output
