@@ -27,12 +27,12 @@ class Fixture(BaseModel):
     team_h_score: int | None
     team_a: int
     team_a_score: int | None
-    event: int
+    event: int | None
     finished: bool
     minutes: int
     provisional_start_time: bool
-    kickoff_time: str
-    event_name: str
+    kickoff_time: str | None
+    event_name: str | None = None
     is_home: bool
     difficulty: int
 
@@ -72,8 +72,8 @@ class History(BaseModel):
     total_points: int
     was_home: bool
     kickoff_time: str
-    team_h_score: int
-    team_a_score: int
+    team_h_score: int | None
+    team_a_score: int | None
     round: int
     minutes: int
     goals_scored: int
