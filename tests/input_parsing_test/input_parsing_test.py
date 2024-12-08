@@ -1,4 +1,5 @@
 """Tests for the input_parsing module."""
+
 from fpl.input_parsing.parse_formation import parse_formation
 
 

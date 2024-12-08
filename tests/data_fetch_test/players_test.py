@@ -3,7 +3,12 @@ import json
 from unittest.mock import MagicMock, Mock
 
 from fpl.model.players_models import PlayerData
-from fpl.data_fetch.players import get_bootstrap_data, get_player_by_id, get_players, get_teams
+from fpl.data_fetch.players import (
+    get_bootstrap_data,
+    get_player_by_id,
+    get_players,
+    get_teams,
+)
 
 
 def test_get_bootstrap_data(mocker, players_bootstrap_data):
@@ -18,9 +23,7 @@ def test_get_bootstrap_data(mocker, players_bootstrap_data):
 
     result = get_bootstrap_data(client)
 
-    assert len(result) == len(
-        players_bootstrap_data["elements"]
-    )
+    assert len(result) == len(players_bootstrap_data["elements"])
     player = result["elements"][0]
     assert player["id"] == 1
     assert player["first_name"] == "Fábio"
@@ -40,11 +43,16 @@ def test_get_player_by_id(player_data, players_bootstrap_data):
     player_id = 1
 
     # Call the function with mocks
-    result = get_player_by_id(client=client, player_id=player_id,bootstrap_data=get_players(players_bootstrap_data))
+    result = get_player_by_id(
+        client=client,
+        player_id=player_id,
+        bootstrap_data=get_players(players_bootstrap_data),
+    )
 
     # Assert that the result is an instance of PlayerData
     assert isinstance(result, PlayerData)
     assert result.player_detail.web_name == "Fábio Vieira"
+
 
 def test_get_players(players_bootstrap_data):
     """Test the get_players function."""
@@ -52,6 +60,7 @@ def test_get_players(players_bootstrap_data):
     assert len(players) == 1
     assert players[1].web_name == "Fábio Vieira"
     assert players[1].position == "Midfielder"
+
 
 def test_get_clubs(team_bootstrap_data):
     """Test the get_teams function."""

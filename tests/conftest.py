@@ -1119,4 +1119,7 @@ def team_bootstrap_data(team_fixture_forest, team_fixture_newcastle):
 @pytest.fixture
 def player_picks(picks_data_wildcard, picks_data_no_chip):
     """Fixture for test_get_player_analysis."""
-    return [ManagerTeamData(**picks_data_no_chip), ManagerTeamData(**picks_data_wildcard)]
+    return [
+        ManagerTeamData(**picks_data_no_chip),
+        ManagerTeamData(**picks_data_wildcard),
+    ]

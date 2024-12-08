@@ -17,11 +17,13 @@ def test_team_data(picks_data_no_chip):
     assert team_data is not None
     assert team_data.active_chip is None
 
+
 def test_team_data_with_chip(picks_data_wildcard):
     """Test TeamData model."""
     team_data = ManagerTeamData(**picks_data_wildcard)
     assert team_data is not None
     assert team_data.active_chip == ChipsEnum.wildcard
+
 
 def test_get_league_data_invalid_chip(picks_data_wildcard):
     """Test TeamData model. given an invalid chip."""
@@ -29,6 +31,7 @@ def test_get_league_data_invalid_chip(picks_data_wildcard):
     picks["active_chip"] = "invalid_chip"
     with pytest.raises(ValidationError):
         team_data = ManagerTeamData(**picks)
+
 
 def test_club(team_fixture_forest):
     """Test Club model."""
