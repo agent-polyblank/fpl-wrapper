@@ -4,12 +4,12 @@ import httpx
 from fpl.data_fetch.managers import get_league_data, get_manager_gw_data
 
 
-def test_get_league_data(league_data):
+def test_get_league_data(fixture_league_data):
     """Test get league data function."""
     client = httpx.Client()
 
     mock_get_player_summary = Mock()
-    mock_get_player_summary.return_value.json.return_value = league_data
+    mock_get_player_summary.return_value.json.return_value = fixture_league_data
 
     # Call the function with mocks
     result = get_league_data(client=client, league_id=1, page=1)

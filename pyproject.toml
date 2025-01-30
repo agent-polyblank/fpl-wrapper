@@ -3,22 +3,17 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-
 name = "fpl"
 dynamic = ["version"]
 description = ''
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.12"
 license = "MIT"
 keywords = []
 authors = [{ name = "Sam King", email = "ag3nt.p0lyblnk@gmail.com" }]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
@@ -30,14 +25,8 @@ Documentation = "https://github.com/agent-polyblank/fpl#readme"
 Issues = "https://github.com/agent-polyblank/fpl#issues"
 Source = "https://github.com/agent-polyblank/fpl"
 
-[project.optional-dependencies]
-testing = [
-  "pytest",
-  "pytest-cov",
-  "pytest-mock",
-  "pytest-watcher",
-  "mypy>=1.0.0",
-]
+[tool.hatch.env.testing]
+dependencies = ["pytest", "pytest-cov", "pytest-watch"]
 
 [tool.hatch.version]
 path = "src/fpl/__about__.py"
@@ -58,11 +47,8 @@ dependencies = ["pytest", "pytest-cov", "pytest-watcher"]
 
 [tool.hatch.envs.test.scripts]
 test = "pytest {args:tests}"
-test-cov = "coverage run -m pytest {args:tests}"
-cov-report = ["- coverage combine", "coverage report"]
-cov = ["test-cov", "cov-report"]
-cov-xml = ["cov", "coverage xml"]
-cov-html = ["cov", "coverage html"]
+cov-xml = "pytest {args:tests} --cov=src/{{cookiecutter.cli_name}} --cov-report=xml:cov.xml"
+cov-html = "pytest {args:tests} --cov=src/{{cookiecutter.cli_name}} --cov-report=html:htmlcov"
 
 [tool.coverage.paths]
 python_project_template = ["src/fpl", "*/fpl/src/fpl"]
