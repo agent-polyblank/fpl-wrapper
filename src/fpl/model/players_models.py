@@ -12,6 +12,7 @@ class PositionEnum(IntEnum):
     Defender = 2
     Midfielder = 3
     Forward = 4
+    Manager = 5
 
     def __str__(self) -> str:
         """Get string representation."""

@@ -3,8 +3,8 @@
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnSave": true
   },
+  "cSpell.words": ["gameweek", "httpx"],
   "python.testing.pytestArgs": ["./tests"],
   "python.testing.pytestEnabled": true,
-  "python.testing.unittestEnabled": false,
-  "cSpell.words": ["gameweek", "httpx"]
+  "python.testing.unittestEnabled": false
 }

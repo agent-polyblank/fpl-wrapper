@@ -14,13 +14,10 @@ from fpl.data_fetch.players import (
 def test_get_bootstrap_data(mocker, fixture_players_bootstrap_data):
     """Test the get_all_player_detail function with mocked dependencies."""
 
-    mocker.patch(
-        "httpx.Client.get",
-        return_value=MagicMock(text=json.dumps(fixture_players_bootstrap_data)),
-    )
-
-    client = httpx.Client()
-
+    client = mocker.Mock()
+    response = mocker.Mock()
+    response.json.return_value = fixture_players_bootstrap_data
+    client.get.return_value = response
     result = get_bootstrap_data(client)
 
     assert len(result) == len(fixture_players_bootstrap_data["elements"])
@@ -29,18 +26,12 @@ def test_get_bootstrap_data(mocker, fixture_players_bootstrap_data):
     assert player["first_name"] == "Fábio"
 
 
-def test_get_player_by_id(fixture_player_data, fixture_players_bootstrap_data):
+def test_get_player_by_id(mocker,fixture_player_data, fixture_players_bootstrap_data):
     """Test the get_player_by_id function with mocked dependencies."""
-
-    client = httpx.Client()
-
-    mock_get_player_summary = Mock()
-    mock_get_player_summary.return_value.json.return_value = fixture_player_data
-
-    mock_get_all_player_detail = Mock()
-    mock_get_all_player_detail.return_value = fixture_players_bootstrap_data[
-        "elements"
-    ]
+    client = mocker.Mock()
+    response = mocker.Mock()
+    response.json.return_value = fixture_player_data
+    client.get.return_value = response
 
     player_id = 1
 

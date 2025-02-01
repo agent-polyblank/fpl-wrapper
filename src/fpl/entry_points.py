@@ -1,94 +1,75 @@
-"""Entry point for module fpl."""
+"""Program entry points."""
 
-import logging
-from argparse import ArgumentParser
+import argparse
+import pprint
 
 import httpx
 
-from fpl.analysis.analysis import (
-    get_most_common_formation,
-    get_player_average_team,
-    get_player_picks,
+from fpl.data_fetch.fixtures import get_fixtures
+from fpl.data_fetch.managers import get_league_data, get_manager_gw_data
+from fpl.data_fetch.players import (
+    get_bootstrap_data,
+    get_player_summary,
+    get_players,
 )
-from fpl.data_fetch.players import get_bootstrap_data, get_players
-from fpl.input_parsing.parse_formation import parse_formation
-from fpl.model.data_analysis import GameweekRange
 
 
-def main() -> None:
-    """FPL entry."""
-    parser = ArgumentParser("fpl")
-    # Usage example
-    parser.add_argument(
-        "--some_arg",
-        help="desc",
-        dest="arg_dest",
-        required=True,
-    )
-    _ = parser.parse_args()
+def get_fixtures_entry() -> None:
+    """
+    Get fixtures.
+
+    Args:
+    ----
+        client (httpx.Client): HTTP client instance.
+
+    Returns:
+    -------
+        list[dict]: List of fixtures.
+
+    """
+    pprint.pprint(get_fixtures(httpx.Client()))
 
 
-def average_team() -> None:
-    """Get a player's average team."""
-    parser = ArgumentParser("Average Team")
-    parser.add_argument(
-        "--player_id",
-        help="Player ID",
-        dest="player_id",
-        required=True,
-        type=int,
-    )
-    parser.add_argument(
-        "--gameweek_from",
-        help="Gameweek from",
-        dest="gameweek_from",
-        required=True,
-        type=int,
-    )
-    parser.add_argument(
-        "--gameweek_to",
-        help="Gameweek to",
-        dest="gameweek_to",
-        required=True,
-        type=int,
-    )
-    parser.add_argument(
-        "--formation",
-        help="Formation",
-        dest="formation",
-        required=False,
-    )
+def get_league_data_entry() -> None:
+    """
+    Get league data and standings. This data is paginated.
 
-    logging.basicConfig(level=logging.INFO)
+    Args:
+    ----
+        client (httpx.Client): HTTP client instance.
+        league_id (str): League id.
+        page (int): Page number.
 
-    args = parser.parse_args()
+    Returns:
+    -------
+        dict: League data.
 
-    client = httpx.Client()
+    """
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument("--league_id", type=str)
+    argparser.add_argument("--page", type=int)
+    args = argparser.parse_args()
+    pprint.pprint(get_league_data(httpx.Client(), args.league_id, args.page))
 
-    player_picks = get_player_picks(
-        args.player_id,
-        gameweek_range=GameweekRange(
-            gameweek_from=args.gameweek_from, gameweek_to=args.gameweek_to
-        ),
-        client=client,
-    )
 
-    player_data = get_players(get_bootstrap_data(client=client))
+def get_manager_gw_data_entry() -> None:
+    """Get manager data for a specific gameweek."""
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument("--team_id", type=str)
+    argparser.add_argument("--gw", type=str)
+    args = argparser.parse_args()
+    pprint.pprint(get_manager_gw_data(httpx.Client(), args.team_id, args.gw))
 
-    if args.formation:
-        formation = parse_formation(args.formation)
-    else:
-        formation = get_most_common_formation(
-            player_picks=player_picks,
-            player_data=player_data,
-            client=client,
-        )
 
-    average_team = get_player_average_team(
-        formation=formation,
-        player_data=player_data,
-        player_picks=player_picks,
-        client=client,
-    )
+def get_players_entry() -> None:
+    """Get all players in league."""
+    bootstrap = get_bootstrap_data(httpx.Client())
+    pprint.pprint(get_players(bootstrap))
 
-    logging.info("%s", average_team.__str__())
+
+def get_player() -> None:
+    """Get player by id."""
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument("--player_id", type=str)
+    args = argparser.parse_args()
+    pprint.pprint(get_player_summary(httpx.Client(), args.player_id))

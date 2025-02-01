@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "fpl"
+name = "fpl_wrapper"
 dynamic = ["version"]
-description = ''
+description = "Wrapper for the Fantasy Premier League API."
 readme = "README.md"
 requires-python = ">=3.12"
 license = "MIT"
@@ -21,12 +21,12 @@ classifiers = [
 dependencies = ["httpx", "coverage[toml]", "pydantic"]
 
 [project.urls]
-Documentation = "https://github.com/agent-polyblank/fpl#readme"
-Issues = "https://github.com/agent-polyblank/fpl#issues"
-Source = "https://github.com/agent-polyblank/fpl"
+Documentation = "https://github.com/agent-polyblank/fpl-wrapper#readme"
+Issues = "https://github.com/agent-polyblank/fpl-wrapper#issues"
+Source = "https://github.com/agent-polyblank/fpl-wrapper"
 
-[tool.hatch.env.testing]
-dependencies = ["pytest", "pytest-cov", "pytest-watch"]
+[tool.hatch.envs.test]
+dependencies = ["pytest", "pytest-cov", "pytest-mock"]
 
 [tool.hatch.version]
 path = "src/fpl/__about__.py"
@@ -41,9 +41,6 @@ source_pkgs = ["fpl", "tests"]
 branch = true
 parallel = true
 omit = ["src/fpl/__about__.py", "tests/*", "**/__init__.py"]
-
-[tool.hatch.envs.test]
-dependencies = ["pytest", "pytest-cov", "pytest-watcher"]
 
 [tool.hatch.envs.test.scripts]
 test = "pytest {args:tests}"
@@ -65,8 +62,11 @@ sources = ["src"]
 installer = "uv"
 
 [project.scripts]
-fpl = "fpl.entry_points:main"
-average-team = "fpl.entry_points:average_team"
+get_fixtures = "fpl.entry_points:get_fixtures_entry"
+get_league_data = "fpl.entry_points:get_league_data_entry"
+get_manager_gw_data = "fpl.entry_points:get_manager_gw_data_entry"
+get_players = "fpl.entry_points:get_players_entry"
+get_player = "fpl.entry_points:get_player"
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
@@ -111,7 +111,7 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["ALL"]
-ignore = ["D203", "D212", "COM812", "ISC001", "ANN101"]
+ignore = ["D203", "D212", "COM812", "ISC001", "ANN101", "T203"]
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]

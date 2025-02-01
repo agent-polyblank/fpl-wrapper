@@ -43,6 +43,7 @@ repos:
       name: (Python) Check that test files end in _test.py
     - id: pretty-format-json
       name: Pretty format JSON
+      exclude: ^\.vscode/settings\.json$
     - id: requirements-txt-fixer
       name: (Python) Check for canonical requirements.txt
     - id: trailing-whitespace

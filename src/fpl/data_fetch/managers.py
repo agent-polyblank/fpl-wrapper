@@ -23,14 +23,14 @@ def get_league_data(
 
     """
     url = f"https://fantasy.premierleague.com/api/leagues-classic/{league_id}/standings/?page_new_entries=1&page_standings={page}&phase=1"
-    return LeagueData.model_validate_json(client.get(url).text)
+    return LeagueData(**client.get(url).json())
 
 
 def get_manager_gw_data(
     client: httpx.Client, team_id: str, gw: str
 ) -> ManagerTeamData:
     """
-    Get player picks for a specific gameweek.
+    Get manager data for a specific gameweek.
 
     Args:
     ----
@@ -44,4 +44,4 @@ def get_manager_gw_data(
 
     """
     url = f"https://fantasy.premierleague.com/api/entry/{team_id}/event/{gw}/picks/"
-    return ManagerTeamData.model_validate_json(client.get(url).text)
+    return ManagerTeamData(**client.get(url).json())

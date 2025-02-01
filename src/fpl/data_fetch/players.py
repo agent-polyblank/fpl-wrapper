@@ -1,7 +1,5 @@
 """Information relating to actual players."""
 
-import json
-
 import httpx
 
 from fpl.model.players_models import Club, PlayerData, PlayerDetail
@@ -24,7 +22,7 @@ def get_bootstrap_data(
 
     """
     url = "https://fantasy.premierleague.com/api/bootstrap-static/"
-    return json.loads(client.get(url).text)
+    return client.get(url).json()
 
 
 def get_players(data: dict[str, any]) -> dict[int, PlayerDetail]:
