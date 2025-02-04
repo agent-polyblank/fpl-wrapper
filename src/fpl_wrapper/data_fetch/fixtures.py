@@ -2,7 +2,7 @@
 
 import httpx
 
-from fpl.model.fixture_models import MatchData
+from fpl_wrapper.model.fixture_models import MatchData
 
 
 def get_fixtures(client: httpx.Client) -> list[MatchData]:

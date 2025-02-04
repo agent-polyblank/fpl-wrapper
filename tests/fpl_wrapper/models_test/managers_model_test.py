@@ -1,7 +1,7 @@
 from pydantic_core import ValidationError
 import pytest
-from fpl.model.managers_models import ChipsEnum, LeagueData, ManagerTeamData
-from fpl.model.players_models import Club
+from fpl_wrapper.model.managers_models import ChipsEnum, LeagueData, ManagerTeamData
+from fpl_wrapper.model.players_models import Club
 
 
 def test_league_data_model(fixture_league_data):

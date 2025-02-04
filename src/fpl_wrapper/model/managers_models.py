@@ -5,7 +5,7 @@ from enum import StrEnum
 
 from pydantic import BaseModel
 
-from fpl.model.players_models import PlayerData
+from fpl_wrapper.model.players_models import PlayerData
 
 
 class NewEntry(BaseModel):

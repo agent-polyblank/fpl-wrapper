@@ -1,6 +1,6 @@
 """Tests for the fixtures model."""
 
-from fpl.model.fixture_models import MatchData
+from fpl_wrapper.model.fixture_models import MatchData
 
 
 def test_match_data_model(fixture_match_fixture):

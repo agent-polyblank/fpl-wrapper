@@ -29,7 +29,7 @@ Source = "https://github.com/agent-polyblank/fpl-wrapper"
 dependencies = ["pytest", "pytest-cov", "pytest-mock"]
 
 [tool.hatch.version]
-path = "src/fpl/__about__.py"
+path = "src/fpl_wrapper/__about__.py"
 
 [tool.hatch.envs.types]
 extra-dependencies = ["mypy>=1.0.0"]
@@ -37,10 +37,10 @@ extra-dependencies = ["mypy>=1.0.0"]
 check = "mypy --install-types --non-interactive {args:src/python_project_template tests}"
 
 [tool.coverage.run]
-source_pkgs = ["fpl", "tests"]
+source_pkgs = ["fpl_wrapper", "tests"]
 branch = true
 parallel = true
-omit = ["src/fpl/__about__.py", "tests/*", "**/__init__.py"]
+omit = ["src/fpl_wrapper/__about__.py", "tests/*", "**/__init__.py"]
 
 [tool.hatch.envs.test.scripts]
 test = "pytest {args:tests}"
@@ -48,8 +48,8 @@ cov-xml = "pytest {args:tests} --cov=src/{{cookiecutter.cli_name}} --cov-report=
 cov-html = "pytest {args:tests} --cov=src/{{cookiecutter.cli_name}} --cov-report=html:htmlcov"
 
 [tool.coverage.paths]
-python_project_template = ["src/fpl", "*/fpl/src/fpl"]
-tests = ["tests", "*/fpl/tests"]
+fpl_wrapper = ["src/fpl_wrapper", "*/fpl_wrapper/src/fpl_wrapper"]
+tests = ["tests", "*/fpl_wrapper/tests"]
 
 [tool.coverage.report]
 exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
@@ -62,11 +62,11 @@ sources = ["src"]
 installer = "uv"
 
 [project.scripts]
-get_fixtures = "fpl.entry_points:get_fixtures_entry"
-get_league_data = "fpl.entry_points:get_league_data_entry"
-get_manager_gw_data = "fpl.entry_points:get_manager_gw_data_entry"
-get_players = "fpl.entry_points:get_players_entry"
-get_player = "fpl.entry_points:get_player"
+get_fixtures = "fpl_wrapper.entry_points:get_fixtures_entry"
+get_league_data = "fpl_wrapper.entry_points:get_league_data_entry"
+get_manager_gw_data = "fpl_wrapper.entry_points:get_manager_gw_data_entry"
+get_players = "fpl_wrapper.entry_points:get_players_entry"
+get_player = "fpl_wrapper.entry_points:get_player"
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.

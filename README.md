@@ -1,16 +1,18 @@
+<!-- pdoc exclude start -->
 <div align="center">
-  <h1>fpl - FPL API support</h1>
+  <h1>FPL Wrapper - A Wrapper for the FPL API</h1>
   <br />
   <br />
-  <a href="https://github.com/agent-polyblank/fpl/issues/new?assignees=&labels=bug&template=1-bug-report.md&title=bug%3A+">Report a Bug</a>
+  <a href="https://github.com/agent-polyblank/fpl-wrapper/issues/new?assignees=&labels=bug&template=1-bug-report.md&title=bug%3A+">Report a Bug</a>
   ·
-  <a href="https://github.com/agent-polyblank/fpl/issues/new?assignees=&labels=enhancement&template=4-feature-request.md&title=feat%3A+">Request a Feature</a>
+  <a href="https://github.com/agent-polyblank/fpl-wrapper/issues/new?assignees=&labels=enhancement&template=4-feature-request.md&title=feat%3A+">Request a Feature</a>
   .
-  <a href="https://github.com/agent-polyblank/fpl/discussions">Ask a Question</a>
+  <a href="https://github.com/agent-polyblank/fpl-wrapper/discussions">Ask a Question</a>
 </div>
 
 <div align="center">
 <br />
+
 
 [![Licence](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](./LICENSE)
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) 
@@ -18,20 +20,19 @@
 ![Pre-commit](https://img.shields.io/badge/pre--commit-3670A0?style=for-the-badge&logo=pre-commit&logoColor=fab040)
 ![PyTest](https://img.shields.io/badge/pytest-3670A0?style=for-the-badge&logo=pytest&logoColor=0a9edc)
 </div>
-
+<!-- pdoc exclude end -->
 
 -----
 
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
-- [Features](#features)
 - [Installation](#installation)
 - [Hatch Environment:](#hatch-environment)
 - [Usage](#usage)
   - [Activating the Environment](#activating-the-environment)
   - [Running the Application](#running-the-application)
-- [Project Structure](#project-structure)
+    - [Command Line](#command-line)
 - [Development](#development)
   - [Installing Dependencies](#installing-dependencies)
   - [Linting \& Formatting](#linting--formatting)
@@ -41,17 +42,11 @@
 - [Contributing](#contributing)
 - [License](#license)
 
-## Features
-
-- **Hatch**: [Hatch](https://hatch.pypa.io/latest/) allows for modern project management for Python, including environment management, testing, and packaging.
-- **Pre-configured linting and formatting:**: [Ruff](https://docs.astral.sh/ruff/) for blazing fast linting and formatting.
-- **Pre-configured test suite**: [PyTest](https://docs.pytest.org/en/8.2.x/) for robust testing.
-- **Pre-commit**: [Pre-Commit Hooks](https://pre-commit.com/) for automated code checks.
 
 ## Installation
 
 ```bash
-cd fpl
+cd fpl_wrapper
 pip install .
 ```
 
@@ -76,55 +71,57 @@ hatch shell
 
 ### Running the Application
 
-After activating the environment, you can run your application using:
+You can either run the functionality from the command line or use the package as a library.
+
+#### Command Line
+
+When installed the following commands are available:
+
+* `get_fixtures` - Fetch the fixture list.
+* `get_league_data` - Fetch data for a league (paginated, for larger leagues you will need to specify the page number).
+* `get_manager_gw_data` - Fetch data for a manager (fpl player)
+* `get_players` - Get player data.
+* `get_player` - Get data for a single player.
+
+Usage:
 
 ```bash
-python -m fpl
+get_fixtures 
+(no arguments)
+
+get_league_data
+usage: get_league_data [-h] [--league_id LEAGUE_ID] [--page PAGE]
+
+options:
+  -h, --help            show this help message and exit
+  --league_id LEAGUE_ID
+  --page PAGE
+
+get_manager_gw_data
+usage: get_manager_gw_data [-h] [--team_id TEAM_ID] [--gw GW]
+
+options:
+  -h, --help         show this help message and exit
+  --team_id TEAM_ID
+  --gw GW
+
+get_players
+(no arguments)
+
+get_player
+usage: get_player [-h] [--player_id PLAYER_ID]
+
+options:
+  -h, --help            show this help message and exit
+  --player_id PLAYER_ID
 ```
 
-## Project Structure
+Or alternatively you can use the package as a library:
 
-The project structure follows a standard layout:
-
+```python
+from fpl_wrapper.data_fetch.fixtures import get_fixtures
+get_fixtures()
 ```
-fpl
- ┣ .github
- ┃ ┣ ISSUE_TEMPLATE
- ┃ ┃ ┣ 1-bug-report.md
- ┃ ┃ ┣ 2-failing-test.md
- ┃ ┃ ┣ 3-docs-bug.md
- ┃ ┃ ┣ 4-feature-request.md
- ┃ ┃ ┣ 5-enhancement-request.md
- ┃ ┃ ┣ 6-security-report.md
- ┃ ┃ ┣ 7-question-support.md
- ┃ ┃ ┗ config.yml
- ┃ ┣ CODEOWNERS
- ┃ ┣ CODE_OF_CONDUCT.md
- ┃ ┣ CONTRIBUTING.md
- ┃ ┣ FUNDING.yml
- ┃ ┣ ISSUE_TEMPLATE.md
- ┃ ┣ SECURITY.md
- ┃ ┣ SUPPORT.md
- ┃ ┣ config.yml
- ┃ ┣ issue_label_bot.yaml
- ┃ ┣ pull_request_template.md
- ┃ ┗ settings.yml
- ┣ src
- ┃ ┗ fpl
- ┃ ┃ ┣ __about__.py
- ┃ ┃ ┣ __init__.py
- ┃ ┃ ┣ __main__.py
- ┃ ┃ ┗ example.py
- ┣ tests
- ┃ ┣ __init__.py
- ┃ ┗ test.py
- ┣ .gitignore
- ┣ .pre-commit-config.yaml
- ┣ LICENSE.txt
- ┣ README.md
- ┗ pyproject.toml
-```
-
 ## Development
 
 ### Installing Dependencies

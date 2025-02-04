@@ -2,7 +2,7 @@
 
 import httpx
 
-from fpl.model.managers_models import LeagueData, ManagerTeamData
+from fpl_wrapper.model.managers_models import LeagueData, ManagerTeamData
 
 
 def get_league_data(

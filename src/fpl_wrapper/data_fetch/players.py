@@ -2,7 +2,7 @@
 
 import httpx
 
-from fpl.model.players_models import Club, PlayerData, PlayerDetail
+from fpl_wrapper.model.players_models import Club, PlayerData, PlayerDetail
 
 
 def get_bootstrap_data(

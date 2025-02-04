@@ -2,8 +2,8 @@ import httpx
 import json
 from unittest.mock import MagicMock, Mock
 
-from fpl.model.players_models import PlayerData
-from fpl.data_fetch.players import (
+from fpl_wrapper.model.players_models import PlayerData
+from fpl_wrapper.data_fetch.players import (
     get_bootstrap_data,
     get_player_by_id,
     get_players,

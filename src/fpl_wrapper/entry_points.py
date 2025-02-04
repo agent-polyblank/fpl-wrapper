@@ -5,9 +5,9 @@ import pprint
 
 import httpx
 
-from fpl.data_fetch.fixtures import get_fixtures
-from fpl.data_fetch.managers import get_league_data, get_manager_gw_data
-from fpl.data_fetch.players import (
+from fpl_wrapper.data_fetch.fixtures import get_fixtures
+from fpl_wrapper.data_fetch.managers import get_league_data, get_manager_gw_data
+from fpl_wrapper.data_fetch.players import (
     get_bootstrap_data,
     get_player_summary,
     get_players,

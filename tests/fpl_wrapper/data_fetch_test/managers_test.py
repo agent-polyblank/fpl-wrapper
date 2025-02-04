@@ -2,7 +2,7 @@ from http import client
 from unittest.mock import Mock
 import httpx
 
-from fpl.data_fetch.managers import get_league_data, get_manager_gw_data
+from fpl_wrapper.data_fetch.managers import get_league_data, get_manager_gw_data
 
 
 def test_get_league_data(fixture_league_data,mocker):

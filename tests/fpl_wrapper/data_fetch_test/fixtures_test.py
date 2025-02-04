@@ -2,7 +2,7 @@
 
 import json
 from pytest_mock import mocker
-from fpl.data_fetch.fixtures import get_fixtures
+from fpl_wrapper.data_fetch.fixtures import get_fixtures
 
 
 def test_get_fixtures(fixture_fixture_get_fixture, mocker):

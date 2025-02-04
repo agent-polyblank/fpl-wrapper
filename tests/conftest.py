@@ -2,8 +2,8 @@
 
 import pytest
 
-from fpl.model.managers_models import ManagerTeamData
-from fpl.model.players_models import PlayerDetail
+from fpl_wrapper.model.managers_models import ManagerTeamData
+from fpl_wrapper.model.players_models import PlayerDetail
 
 
 @pytest.fixture

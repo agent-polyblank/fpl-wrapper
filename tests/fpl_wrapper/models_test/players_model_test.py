@@ -1,6 +1,6 @@
 """Tests for models."""
 
-from fpl.model.players_models import (
+from fpl_wrapper.model.players_models import (
     Fixture,
     History,
     HistoryPast,
