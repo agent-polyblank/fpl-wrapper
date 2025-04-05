@@ -2,22 +2,31 @@
 
 import httpx
 
-from fpl_wrapper.model.fixture_models import MatchData
+from fpl_wrapper.model.fixture_models import Fixtures
 
 
-def get_fixtures(client: httpx.Client) -> list[MatchData]:
+def get_fixtures(client: httpx.Client, gameweek: int, team_id: int) -> Fixtures:
     """
     Get fixtures.
 
     Args:
     ----
         client (httpx.Client): HTTP client instance.
+        gameweek (int): Gameweek number.
+        team_id (int): Team id.
 
     Returns:
     -------
         list[dict]: List of fixtures.
 
     """
-    url = "https://fantasy.premierleague.com/api/fixtures/"
-    data = client.get(url).json()
-    return [MatchData(**fixture) for fixture in data]
+    params = {}
+    if gameweek:
+        params["event"] = gameweek
+    if team_id:
+        params["team"] = team_id
+
+    response = client.get(
+        "https://fantasy.premierleague.com/api/fixtures/", params=params
+    )
+    return Fixtures(fixtures=response.json())

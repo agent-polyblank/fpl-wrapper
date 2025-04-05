@@ -1,11 +1,11 @@
 """Models for fixtures."""
 
-from enum import Enum
+from enum import StrEnum
 
 from pydantic import BaseModel
 
 
-class StatIdentifier(str, Enum):
+class StatIdentifier(StrEnum):
     """Identifiers for stats."""
 
     GOALS_SCORED = "goals_scored"
@@ -37,7 +37,7 @@ class Stat(BaseModel):
     h: list[StatElement]
 
 
-class MatchData(BaseModel):
+class Fixture(BaseModel):
     """Match data model."""
 
     code: int
@@ -50,10 +50,16 @@ class MatchData(BaseModel):
     provisional_start_time: bool
     started: bool
     team_a: int
-    team_a_score: int
+    team_a_score: int | None
     team_h: int
-    team_h_score: int
+    team_h_score: int | None
     stats: list[Stat]
     team_h_difficulty: int
     team_a_difficulty: int
     pulse_id: int
+
+
+class Fixtures(BaseModel):
+    """Fixtures model."""
+
+    fixtures: list[Fixture]

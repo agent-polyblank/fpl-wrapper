@@ -2,27 +2,7 @@
 
 import httpx
 
-from fpl_wrapper.model.players_models import Club, PlayerData, PlayerDetail
-
-
-def get_bootstrap_data(
-    client: httpx.Client,
-) -> dict[str, any]:
-    """
-    Get all player details from the FPL API.
-
-    Args:
-    ----
-        client (httpx.Client): HTTP client instance.
-        data (dict[str, any]): Static content data.
-
-    Returns:
-    -------
-        list[PlayerDetail]: List of player details.
-
-    """
-    url = "https://fantasy.premierleague.com/api/bootstrap-static/"
-    return client.get(url).json()
+from fpl_wrapper.model.players_models import PlayerData, PlayerDetail
 
 
 def get_players(data: dict[str, any]) -> dict[int, PlayerDetail]:
@@ -39,22 +19,6 @@ def get_players(data: dict[str, any]) -> dict[int, PlayerDetail]:
 
     """
     return {player["id"]: PlayerDetail(**player) for player in data["elements"]}
-
-
-def get_teams(data: dict[str, any]) -> list[Club]:
-    """
-    Get team data from the FPL API.
-
-    Args:
-    ----
-        data (dict[str, any]): league data.
-
-    Returns:
-    -------
-        list[Team]: list of teams.
-
-    """
-    return [Club(**team) for team in data["teams"]]
 
 
 def get_player_summary(client: httpx.Client, player_id: str) -> httpx.Response:

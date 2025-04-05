@@ -77,19 +77,19 @@ You can either run the functionality from the command line or use the package as
 
 When installed the following commands are available:
 
-* `get_fixtures` - Fetch the fixture list.
-* `get_league_data` - Fetch data for a league (paginated, for larger leagues you will need to specify the page number).
-* `get_manager_gw_data` - Fetch data for a manager (fpl player)
-* `get_players` - Get player data.
-* `get_player` - Get data for a single player.
+* `fpl_get_fixtures` - Fetch the fixture list.
+* `fpl_get_league_data` - Fetch data for a league (paginated, for larger leagues you will need to specify the page number).
+* `fpl_get_manager_gw_data` - Fetch data for a manager (fpl player)
+* `fpl_get_players` - Get player data.
+* `fpl_get_player` - Get data for a single player.
 
 Usage:
 
 ```bash
-get_fixtures 
+fpl_get_fixtures 
 (no arguments)
 
-get_league_data
+fpl_get_league_data
 usage: get_league_data [-h] [--league_id LEAGUE_ID] [--page PAGE]
 
 options:
@@ -97,7 +97,7 @@ options:
   --league_id LEAGUE_ID
   --page PAGE
 
-get_manager_gw_data
+fpl_get_manager_gw_data
 usage: get_manager_gw_data [-h] [--team_id TEAM_ID] [--gw GW]
 
 options:
@@ -105,10 +105,10 @@ options:
   --team_id TEAM_ID
   --gw GW
 
-get_players
+fpl_get_players
 (no arguments)
 
-get_player
+fpl_get_player
 usage: get_player [-h] [--player_id PLAYER_ID]
 
 options:

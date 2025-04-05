@@ -3,7 +3,6 @@
 import pytest
 
 from fpl_wrapper.model.managers_models import ManagerTeamData
-from fpl_wrapper.model.players_models import PlayerDetail
 
 
 @pytest.fixture
@@ -1131,7 +1130,7 @@ def fixture_player_picks_list(fixture_picks_data_wildcard, picks_data_no_chip):
 
 
 @pytest.fixture()
-def fixture_match_fixture():
+def fixture_player_event():
     return {
         "code": 2444470,
         "event": 1,
@@ -1150,258 +1149,552 @@ def fixture_match_fixture():
             {
                 "identifier": "goals_scored",
                 "a": [],
-                "h": [
-                    {
-                        "value": 1,
-                        "element": 389
-                    }
-                ]
+                "h": [{"value": 1, "element": 389}],
             },
             {
                 "identifier": "assists",
                 "a": [],
-                "h": [
-                    {
-                        "value": 1,
-                        "element": 372
-                    }
-                ]
+                "h": [{"value": 1, "element": 372}],
             },
-            {
-                "identifier": "own_goals",
-                "a": [],
-                "h": []
-            },
-            {
-                "identifier": "penalties_saved",
-                "a": [],
-                "h": []
-            },
-            {
-                "identifier": "penalties_missed",
-                "a": [],
-                "h": []
-            },
+            {"identifier": "own_goals", "a": [], "h": []},
+            {"identifier": "penalties_saved", "a": [], "h": []},
+            {"identifier": "penalties_missed", "a": [], "h": []},
             {
                 "identifier": "yellow_cards",
                 "a": [
-                    {
-                        "value": 1,
-                        "element": 240
-                    },
-                    {
-                        "value": 1,
-                        "element": 241
-                    },
-                    {
-                        "value": 1,
-                        "element": 243
-                    }
+                    {"value": 1, "element": 240},
+                    {"value": 1, "element": 241},
+                    {"value": 1, "element": 243},
                 ],
                 "h": [
-                    {
-                        "value": 1,
-                        "element": 377
-                    },
-                    {
-                        "value": 1,
-                        "element": 382
-                    }
-                ]
+                    {"value": 1, "element": 377},
+                    {"value": 1, "element": 382},
+                ],
             },
-            {
-                "identifier": "red_cards",
-                "a": [],
-                "h": []
-            },
+            {"identifier": "red_cards", "a": [], "h": []},
             {
                 "identifier": "saves",
-                "a": [
-                    {
-                        "value": 4,
-                        "element": 248
-                    }
-                ],
-                "h": [
-                    {
-                        "value": 2,
-                        "element": 383
-                    }
-                ]
+                "a": [{"value": 4, "element": 248}],
+                "h": [{"value": 2, "element": 383}],
             },
             {
                 "identifier": "bonus",
                 "a": [],
                 "h": [
-                    {
-                        "value": 3,
-                        "element": 389
-                    },
-                    {
-                        "value": 2,
-                        "element": 594
-                    },
-                    {
-                        "value": 1,
-                        "element": 369
-                    },
-                    {
-                        "value": 1,
-                        "element": 380
-                    }
-                ]
+                    {"value": 3, "element": 389},
+                    {"value": 2, "element": 594},
+                    {"value": 1, "element": 369},
+                    {"value": 1, "element": 380},
+                ],
             },
             {
                 "identifier": "bps",
                 "a": [
-                    {
-                        "value": 16,
-                        "element": 249
-                    },
-                    {
-                        "value": 15,
-                        "element": 240
-                    },
-                    {
-                        "value": 15,
-                        "element": 255
-                    },
-                    {
-                        "value": 13,
-                        "element": 245
-                    },
-                    {
-                        "value": 12,
-                        "element": 248
-                    },
-                    {
-                        "value": 11,
-                        "element": 19
-                    },
-                    {
-                        "value": 10,
-                        "element": 251
-                    },
-                    {
-                        "value": 7,
-                        "element": 257
-                    },
-                    {
-                        "value": 5,
-                        "element": 239
-                    },
-                    {
-                        "value": 5,
-                        "element": 241
-                    },
-                    {
-                        "value": 5,
-                        "element": 247
-                    },
-                    {
-                        "value": 4,
-                        "element": 254
-                    },
-                    {
-                        "value": 4,
-                        "element": 259
-                    },
-                    {
-                        "value": 3,
-                        "element": 252
-                    },
-                    {
-                        "value": 2,
-                        "element": 243
-                    },
-                    {
-                        "value": 2,
-                        "element": 256
-                    }
+                    {"value": 16, "element": 249},
+                    {"value": 15, "element": 240},
+                    {"value": 15, "element": 255},
+                    {"value": 13, "element": 245},
+                    {"value": 12, "element": 248},
+                    {"value": 11, "element": 19},
+                    {"value": 10, "element": 251},
+                    {"value": 7, "element": 257},
+                    {"value": 5, "element": 239},
+                    {"value": 5, "element": 241},
+                    {"value": 5, "element": 247},
+                    {"value": 4, "element": 254},
+                    {"value": 4, "element": 259},
+                    {"value": 3, "element": 252},
+                    {"value": 2, "element": 243},
+                    {"value": 2, "element": 256},
                 ],
                 "h": [
-                    {
-                        "value": 33,
-                        "element": 389
-                    },
-                    {
-                        "value": 32,
-                        "element": 594
-                    },
-                    {
-                        "value": 26,
-                        "element": 369
-                    },
-                    {
-                        "value": 26,
-                        "element": 380
-                    },
-                    {
-                        "value": 25,
-                        "element": 383
-                    },
-                    {
-                        "value": 22,
-                        "element": 377
-                    },
-                    {
-                        "value": 21,
-                        "element": 378
-                    },
-                    {
-                        "value": 19,
-                        "element": 368
-                    },
-                    {
-                        "value": 11,
-                        "element": 364
-                    },
-                    {
-                        "value": 11,
-                        "element": 372
-                    },
-                    {
-                        "value": 10,
-                        "element": 366
-                    },
-                    {
-                        "value": 5,
-                        "element": 385
-                    },
-                    {
-                        "value": 3,
-                        "element": 381
-                    },
-                    {
-                        "value": 3,
-                        "element": 593
-                    },
-                    {
-                        "value": 2,
-                        "element": 371
-                    },
-                    {
-                        "value": -1,
-                        "element": 382
-                    }
-                ]
+                    {"value": 33, "element": 389},
+                    {"value": 32, "element": 594},
+                    {"value": 26, "element": 369},
+                    {"value": 26, "element": 380},
+                    {"value": 25, "element": 383},
+                    {"value": 22, "element": 377},
+                    {"value": 21, "element": 378},
+                    {"value": 19, "element": 368},
+                    {"value": 11, "element": 364},
+                    {"value": 11, "element": 372},
+                    {"value": 10, "element": 366},
+                    {"value": 5, "element": 385},
+                    {"value": 3, "element": 381},
+                    {"value": 3, "element": 593},
+                    {"value": 2, "element": 371},
+                    {"value": -1, "element": 382},
+                ],
             },
-            {
-                "identifier": "mng_underdog_win",
-                "a": [],
-                "h": []
-            },
-            {
-                "identifier": "mng_underdog_draw",
-                "a": [],
-                "h": []
-            }
+            {"identifier": "mng_underdog_win", "a": [], "h": []},
+            {"identifier": "mng_underdog_draw", "a": [], "h": []},
         ],
         "team_h_difficulty": 3,
         "team_a_difficulty": 3,
-        "pulse_id": 115827
+        "pulse_id": 115827,
     }
 
+
 @pytest.fixture()
-def fixture_fixture_get_fixture(fixture_match_fixture):
-    return [fixture_match_fixture]
+def fixture_get_event(fixture_player_event):
+    return [fixture_player_event]
+
+
+@pytest.fixture()
+def fixture_chip():
+    return {
+        "id": 1,
+        "name": "wildcard",
+        "number": 1,
+        "start_event": 2,
+        "stop_event": 19,
+        "chip_type": "transfer",
+        "overrides": {
+            "rules": {},
+            "scoring": {},
+            "element_types": [],
+            "pick_multiplier": None,
+        },
+    }
+
+
+@pytest.fixture()
+def fixture_game_settings():
+    return {
+        "game_settings": {
+            "league_join_private_max": 30,
+            "league_join_public_max": 5,
+            "league_max_size_public_classic": 20,
+            "league_max_size_public_h2h": 16,
+            "league_max_size_private_h2h": 16,
+            "league_max_ko_rounds_private_h2h": 3,
+            "league_prefix_public": "League",
+            "league_points_h2h_win": 3,
+            "league_points_h2h_lose": 0,
+            "league_points_h2h_draw": 1,
+            "league_ko_first_instead_of_random": None,
+            "cup_start_event_id": None,
+            "cup_stop_event_id": None,
+            "cup_qualifying_method": None,
+            "cup_type": None,
+            "featured_entries": [],
+            "element_sell_at_purchase_price": False,
+            "percentile_ranks": [
+                1,
+                5,
+                10,
+                15,
+                20,
+                25,
+                30,
+                35,
+                40,
+                45,
+                50,
+                55,
+                60,
+                65,
+                70,
+                75,
+                80,
+                95,
+                90,
+                95,
+            ],
+            "underdog_differential": 5,
+            "squad_squadplay": 11,
+            "squad_squadsize": 15,
+            "squad_special_min": None,
+            "squad_special_max": None,
+            "squad_team_limit": 3,
+            "squad_total_spend": 1000,
+            "ui_currency_multiplier": 10,
+            "ui_use_special_shirts": False,
+            "ui_special_shirt_exclusions": [],
+            "stats_form_days": 30,
+            "sys_vice_captain_enabled": True,
+            "transfers_cap": 20,
+            "transfers_sell_on_fee": 0.5,
+            "max_extra_free_transfers": 4,
+            "league_h2h_tiebreak_stats": ["+goals_scored", "-goals_conceded"],
+            "timezone": "UTC",
+        }
+    }
+
+
+@pytest.fixture()
+def fixture_config_settings():
+    return {
+        "settings": {"entry_per_event": False, "timezone": "UTC"},
+        "rules": {
+            "league_join_private_max": 30,
+            "league_join_public_max": 5,
+            "league_max_size_public_classic": 20,
+            "league_max_size_public_h2h": 16,
+            "league_max_size_private_h2h": 16,
+            "league_max_ko_rounds_private_h2h": 3,
+            "league_prefix_public": "League",
+            "league_points_h2h_win": 3,
+            "league_points_h2h_lose": 0,
+            "league_points_h2h_draw": 1,
+            "league_ko_first_instead_of_random": False,
+            "cup_start_event_id": None,
+            "cup_stop_event_id": None,
+            "cup_qualifying_method": None,
+            "cup_type": None,
+            "featured_entries": [],
+            "element_sell_at_purchase_price": False,
+            "percentile_ranks": [
+                1,
+                5,
+                10,
+                15,
+                20,
+                25,
+                30,
+                35,
+                40,
+                45,
+                50,
+                55,
+                60,
+                65,
+                70,
+                75,
+                80,
+                95,
+                90,
+                95,
+            ],
+            "underdog_differential": 5,
+            "squad_squadplay": 11,
+            "squad_squadsize": 15,
+            "squad_special_min": None,
+            "squad_special_max": None,
+            "squad_team_limit": 3,
+            "squad_total_spend": 1000,
+            "ui_currency_multiplier": 10,
+            "ui_use_special_shirts": False,
+            "ui_special_shirt_exclusions": [],
+            "stats_form_days": 30,
+            "sys_vice_captain_enabled": True,
+            "transfers_cap": 20,
+            "transfers_sell_on_fee": 0.5,
+            "max_extra_free_transfers": 4,
+            "league_h2h_tiebreak_stats": ["+goals_scored", "-goals_conceded"],
+        },
+        "scoring": {
+            "long_play": 2,
+            "short_play": 1,
+            "goals_conceded": {
+                "DEF": -1,
+                "FWD": 0,
+                "GKP": -1,
+                "MID": 0,
+                "MNG": 0,
+            },
+            "saves": 1,
+            "goals_scored": {"DEF": 6, "FWD": 4, "GKP": 10, "MID": 5, "MNG": 0},
+            "assists": 3,
+            "clean_sheets": {"DEF": 4, "FWD": 0, "GKP": 4, "MID": 1, "MNG": 0},
+            "penalties_saved": 5,
+            "penalties_missed": -2,
+            "yellow_cards": -1,
+            "red_cards": -3,
+            "own_goals": -2,
+            "bonus": 1,
+            "bps": 0,
+            "influence": 0,
+            "creativity": 0,
+            "threat": 0,
+            "ict_index": 0,
+            "special_multiplier": 1,
+            "mng_goals_scored": {
+                "DEF": 0,
+                "FWD": 0,
+                "GKP": 0,
+                "MID": 0,
+                "MNG": 1,
+            },
+            "mng_clean_sheets": {
+                "DEF": 0,
+                "FWD": 0,
+                "GKP": 0,
+                "MID": 0,
+                "MNG": 2,
+            },
+            "mng_win": {"DEF": 0, "FWD": 0, "GKP": 0, "MID": 0, "MNG": 6},
+            "mng_draw": {"DEF": 0, "FWD": 0, "GKP": 0, "MID": 0, "MNG": 3},
+            "mng_loss": 0,
+            "mng_underdog_win": {
+                "DEF": 0,
+                "FWD": 0,
+                "GKP": 0,
+                "MID": 0,
+                "MNG": 10,
+            },
+            "mng_underdog_draw": {
+                "DEF": 0,
+                "FWD": 0,
+                "GKP": 0,
+                "MID": 0,
+                "MNG": 5,
+            },
+        },
+    }
+
+
+@pytest.fixture()
+def fixture_event_bootstrap():
+    return {
+        "id": 1,
+        "name": "Gameweek 1",
+        "deadline_time": "2024-08-16T17:30:00Z",
+        "release_time": None,
+        "average_entry_score": 57,
+        "finished": True,
+        "data_checked": True,
+        "highest_scoring_entry": 3546234,
+        "deadline_time_epoch": 1723829400,
+        "deadline_time_game_offset": 0,
+        "highest_score": 127,
+        "is_previous": False,
+        "is_current": False,
+        "is_next": False,
+        "cup_leagues_created": False,
+        "h2h_ko_matches_created": False,
+        "can_enter": False,
+        "can_manage": False,
+        "released": True,
+        "ranked_count": 8597356,
+        "overrides": {
+            "rules": {},
+            "scoring": {},
+            "element_types": [],
+            "pick_multiplier": None,
+        },
+        "chip_plays": [
+            {"chip_name": "bboost", "num_played": 144974},
+            {"chip_name": "3xc", "num_played": 221430},
+        ],
+        "most_selected": 401,
+        "most_transferred_in": 27,
+        "top_element": 328,
+        "top_element_info": {"id": 328, "points": 14},
+        "transfers_made": 0,
+        "most_captained": 351,
+        "most_vice_captained": 351,
+    }
+
+
+@pytest.fixture()
+def fixture_element_type():
+    return (
+        {
+            "id": 1,
+            "plural_name": "Goalkeepers",
+            "plural_name_short": "GKP",
+            "singular_name": "Goalkeeper",
+            "singular_name_short": "GKP",
+            "squad_select": 2,
+            "squad_min_select": None,
+            "squad_max_select": None,
+            "squad_min_play": 1,
+            "squad_max_play": 1,
+            "ui_shirt_specific": True,
+            "sub_positions_locked": [12],
+            "element_count": 77,
+        },
+    )
+
+
+@pytest.fixture()
+def fixture_bootstrap_data(
+    fixture_chip,
+    fixture_event_bootstrap,
+    fixture_config_settings,
+    fixture_game_settings,
+    fixture_team_forest,
+    fixture_player_detail_data,
+    fixture_element_type,
+):
+    return {
+        "chips": [fixture_chip],
+        "events": [fixture_event_bootstrap],
+        "game_settings": fixture_game_settings,
+        "game_config": fixture_config_settings,
+        "phases": [],
+        "teams": [fixture_team_forest],
+        "total_players": 3,
+        "elements": [fixture_player_detail_data],
+        "element_stats": [{}],
+        "element_types": fixture_element_type,
+    }
+
+
+@pytest.fixture()
+def fixture_manager_basic():
+    return {
+        "id": 2407187,
+        "joined_time": "2024-07-26T21:32:01.847297Z",
+        "started_event": 1,
+        "favourite_team": 1,
+        "player_first_name": "Brian",
+        "player_last_name": "Galligan",
+        "player_region_id": 104,
+        "player_region_name": "Ireland",
+        "player_region_iso_code_short": "IE",
+        "player_region_iso_code_long": "IRL",
+        "years_active": 14,
+        "summary_overall_points": 1409,
+        "summary_overall_rank": 2648181,
+        "summary_event_points": 88,
+        "summary_event_rank": 2012701,
+        "current_event": 24,
+        "leagues": {
+            "classic": [
+                {
+                    "id": 1,
+                    "name": "Arsenal",
+                    "short_name": "team-1",
+                    "created": "2024-07-17T11:51:46.252125Z",
+                    "closed": False,
+                    "rank": None,
+                    "max_entries": None,
+                    "league_type": "s",
+                    "scoring": "c",
+                    "admin_entry": None,
+                    "start_event": 1,
+                    "entry_can_leave": False,
+                    "entry_can_admin": False,
+                    "entry_can_invite": False,
+                    "has_cup": True,
+                    "cup_league": 2451205,
+                    "cup_qualified": True,
+                    "rank_count": 1769184,
+                    "entry_percentile_rank": 25,
+                    "active_phases": [
+                        {
+                            "phase": 1,
+                            "rank": 404610,
+                            "last_rank": 424962,
+                            "rank_sort": 404663,
+                            "total": 1409,
+                            "league_id": 1,
+                            "rank_count": 1769184,
+                            "entry_percentile_rank": 25,
+                        },
+                        {
+                            "phase": 8,
+                            "rank": 297842,
+                            "last_rank": 0,
+                            "rank_sort": 298095,
+                            "total": 88,
+                            "league_id": 1,
+                            "rank_count": 1769183,
+                            "entry_percentile_rank": 20,
+                        },
+                    ],
+                    "entry_rank": 404610,
+                    "entry_last_rank": 424962,
+                },
+            ],
+            "h2h": [
+                {
+                    "id": 521600,
+                    "name": "IN IT TO WIN IT",
+                    "short_name": None,
+                    "created": "2024-07-29T20:49:23.364914Z",
+                    "closed": True,
+                    "rank": None,
+                    "max_entries": None,
+                    "league_type": "x",
+                    "scoring": "h",
+                    "admin_entry": 2018250,
+                    "start_event": 1,
+                    "entry_can_leave": False,
+                    "entry_can_admin": False,
+                    "entry_can_invite": False,
+                    "has_cup": False,
+                    "cup_league": None,
+                    "cup_qualified": None,
+                    "rank_count": None,
+                    "entry_percentile_rank": None,
+                    "active_phases": [],
+                    "entry_rank": 16,
+                    "entry_last_rank": 16,
+                }
+            ],
+            "cup": {
+                "matches": [],
+                "status": {
+                    "qualification_event": None,
+                    "qualification_numbers": None,
+                    "qualification_rank": None,
+                    "qualification_state": None,
+                },
+                "cup_league": None,
+            },
+            "cup_matches": [
+                {
+                    "id": 58565833,
+                    "entry_1_entry": 9747778,
+                    "entry_1_name": "GHUR",
+                    "entry_1_player_name": "Freddy Ferguson",
+                    "entry_1_points": 55,
+                    "entry_1_win": 0,
+                    "entry_1_draw": 0,
+                    "entry_1_loss": 0,
+                    "entry_1_total": 0,
+                    "entry_2_entry": 2407187,
+                    "entry_2_name": "Ricecakes",
+                    "entry_2_player_name": "Brian Galligan",
+                    "entry_2_points": 42,
+                    "entry_2_win": 0,
+                    "entry_2_draw": 0,
+                    "entry_2_loss": 0,
+                    "entry_2_total": 0,
+                    "is_knockout": True,
+                    "league": 2421396,
+                    "winner": 9747778,
+                    "seed_value": None,
+                    "event": 15,
+                    "tiebreak": None,
+                    "is_bye": False,
+                    "knockout_name": "Round of 16777216",
+                },
+            ],
+        },
+        "name": "Ricecakes",
+        "name_change_blocked": False,
+        "entered_events": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+        ],
+        "kit": '{"kit_shirt_type":"plain","kit_shirt_base":"#c92a2a","kit_shirt_sleeves":"#ffffff","kit_shirt_secondary":"#E1E1E1","kit_shirt_logo":"pl-primary-stars","kit_shorts":"#ffffff","kit_socks_type":"plain","kit_socks_base":"#4a90e2","kit_socks_secondary":"#E1E1E1"}',
+        "last_deadline_bank": 29,
+        "last_deadline_value": 1028,
+        "last_deadline_total_transfers": 28,
+    }

@@ -1,6 +1,11 @@
 """Models for bootstrap data."""
 
+from enum import StrEnum
+from typing import Any
+
 from pydantic import BaseModel
+
+from fpl_wrapper.model.players_models import PlayerDetail
 
 
 class TeamData(BaseModel):
@@ -8,7 +13,7 @@ class TeamData(BaseModel):
 
     code: int
     draw: int
-    form: str
+    form: str | None
     id: int
     loss: int
     name: str
@@ -17,7 +22,7 @@ class TeamData(BaseModel):
     position: int
     short_name: str
     strength: int
-    team_division: int
+    team_division: int | None
     unavailable: bool
     win: int
     strength_overall_home: int
@@ -43,13 +48,13 @@ class TopElementInfo(BaseModel):
     points: int
 
 
-class Overrides(BaseModel):
+class EventOverrides(BaseModel):
     """Overrides model."""
 
     # rules: dict[str, Any]  # noqa: ERA001
     # scoring: dict[str, Any]  # noqa: ERA001
     # element_types: list[Any]  # noqa: ERA001
-    pick_multiplier: int
+    pick_multiplier: int | None
 
 
 class Event(BaseModel):
@@ -75,7 +80,7 @@ class Event(BaseModel):
     can_manage: bool
     released: bool
     ranked_count: int
-    overrides: Overrides
+    overrides: EventOverrides
     chip_plays: list[ChipPlay]
     most_selected: int
     most_transferred_in: int
@@ -84,3 +89,89 @@ class Event(BaseModel):
     transfers_made: int
     most_captained: int
     most_vice_captained: int
+
+
+class ElementType(BaseModel):
+    """Model for player element type."""
+
+    id: int
+    plural_name: str
+    plural_name_short: str
+    singular_name: str
+    singular_name_short: str
+    squad_select: int
+    squad_min_select: int | None
+    squad_max_select: int | None
+    squad_min_play: int
+    squad_max_play: int
+    ui_shirt_specific: bool
+    sub_positions_locked: list[int]
+    element_count: int
+
+
+class Overrides(BaseModel):
+    """
+    Overrides model.
+
+    Note: We dont actually know what rules,scores and pick_multiplier are.
+    """
+
+    rules: dict[str, Any]
+    scoring: dict[str, Any]
+    element_types: list[ElementType]
+    pick_multiplier: Any | None
+
+
+class ChipTypeEnum(StrEnum):
+    """Chip type enum."""
+
+    TRANSFER = "transfer"
+    TEAM = "team"
+
+
+class Chip(BaseModel):
+    """Chip model."""
+
+    id: int
+    name: str
+    number: int
+    start_event: int
+    stop_event: int
+    chip_type: ChipTypeEnum
+    overrides: Overrides
+
+
+class GameSettings(BaseModel):
+    """Game settings model."""
+
+
+class GameConfig(BaseModel):
+    """Game config model."""
+
+
+class Phase(BaseModel):
+    """Phase model."""
+
+    id: int
+    name: str
+    start_event: int
+    stop_event: int
+
+
+class ElementStat(BaseModel):
+    """Element stat model."""
+
+
+class BootstrapData(BaseModel):
+    """Bootstrap data model."""
+
+    chips: list[Chip]
+    events: list[Event]
+    game_settings: GameSettings
+    game_config: GameConfig
+    phases: list[Phase]
+    teams: list[TeamData]
+    total_players: int
+    element_stats: list[ElementStat]
+    element_types: list[ElementType]
+    elements: list[PlayerDetail]

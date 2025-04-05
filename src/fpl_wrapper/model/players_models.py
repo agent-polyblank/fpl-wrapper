@@ -4,6 +4,8 @@ from enum import IntEnum
 
 from pydantic import BaseModel, Field
 
+from fpl_wrapper.model.fixture_models import Fixture
+
 
 class PositionEnum(IntEnum):
     """Enum for player positions."""
@@ -17,51 +19,6 @@ class PositionEnum(IntEnum):
     def __str__(self) -> str:
         """Get string representation."""
         return self.name.capitalize()
-
-
-class Fixture(BaseModel):
-    """Fixture model."""
-
-    id: int
-    code: int
-    team_h: int
-    team_h_score: int | None
-    team_a: int
-    team_a_score: int | None
-    event: int | None
-    finished: bool
-    minutes: int
-    provisional_start_time: bool
-    kickoff_time: str | None
-    event_name: str | None = None
-    is_home: bool
-    difficulty: int
-
-
-class Club(BaseModel):
-    """Team model."""
-
-    code: int
-    draw: int
-    form: int | None
-    id: int
-    loss: int
-    name: str
-    played: int
-    points: int
-    position: int
-    short_name: str
-    strength: int
-    team_division: str | None
-    unavailable: bool
-    win: int
-    strength_overall_home: int
-    strength_overall_away: int
-    strength_attack_home: int
-    strength_attack_away: int
-    strength_defence_home: int
-    strength_defence_away: int
-    pulse_id: int
 
 
 class History(BaseModel):

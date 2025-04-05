@@ -62,11 +62,11 @@ sources = ["src"]
 installer = "uv"
 
 [project.scripts]
-get_fixtures = "fpl_wrapper.entry_points:get_fixtures_entry"
-get_league_data = "fpl_wrapper.entry_points:get_league_data_entry"
-get_manager_gw_data = "fpl_wrapper.entry_points:get_manager_gw_data_entry"
-get_players = "fpl_wrapper.entry_points:get_players_entry"
-get_player = "fpl_wrapper.entry_points:get_player"
+fpl_get_fixtures = "fpl_wrapper.entry_points:get_fixtures_entry"
+fpl_get_league_data = "fpl_wrapper.entry_points:get_league_data_entry"
+fpl_get_manager_gw_data = "fpl_wrapper.entry_points:get_manager_gw_data_entry"
+fpl_get_players = "fpl_wrapper.entry_points:get_players_entry"
+fpl_get_player = "fpl_wrapper.entry_points:get_player"
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.

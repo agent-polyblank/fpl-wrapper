@@ -2,6 +2,7 @@
 
 import httpx
 
+from fpl_wrapper.model.manager_basic import ManagerBase
 from fpl_wrapper.model.managers_models import LeagueData, ManagerTeamData
 
 
@@ -45,3 +46,23 @@ def get_manager_gw_data(
     """
     url = f"https://fantasy.premierleague.com/api/entry/{team_id}/event/{gw}/picks/"
     return ManagerTeamData(**client.get(url).json())
+
+
+def get_manager_basic_info(
+    client: httpx.Client, manager_id: str
+) -> ManagerBase:
+    """
+    Get basic information about a manager.
+
+    Args:
+    ----
+        client (httpx.Client): httpx client instance.
+        manager_id (str): Manager id.
+
+    Returns:
+    -------
+        ManagerBase: Manager details.
+
+    """
+    url = f"https://fantasy.premierleague.com/api/entry/{manager_id}/"
+    return ManagerBase(**client.get(url).json())

@@ -1,10 +1,11 @@
 """Tests for the fixtures model."""
 
-from fpl_wrapper.model.fixture_models import MatchData
+from fpl_wrapper.model.fixture_models import Fixtures
+from fpl_wrapper.model.players_models import Fixture
 
 
-def test_match_data_model(fixture_match_fixture):
+def test_match_data_model(fixture_player_event):
     """Test the fixtures model."""
-    fixture = MatchData(**fixture_match_fixture)
+    fixture = Fixture(**fixture_player_event)
     assert fixture.id == 1
     assert fixture.kickoff_time == "2024-08-16T19:00:00Z"
