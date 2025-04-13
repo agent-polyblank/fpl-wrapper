@@ -6,13 +6,10 @@ from pprint import pprint
 import httpx
 
 from fpl_wrapper.data_fetch.bootstrap_data import get_bootstrap_data
-from fpl_wrapper.data_fetch.fixtures import get_fixtures
-from fpl_wrapper.data_fetch.managers import get_league_data, get_manager_gw_data
-from fpl_wrapper.data_fetch.players import (
-    get_player_summary,
-    get_players,
-)
-from fpl_wrapper.data_fetch.teams import get_teams
+from fpl_wrapper.data_fetch.fixtures import FixtureProvider
+from fpl_wrapper.data_fetch.managers import Managers
+from fpl_wrapper.data_fetch.players import Players
+from fpl_wrapper.data_fetch.teams import Teams
 
 
 def get_fixtures_entry() -> None:
@@ -32,10 +29,11 @@ def get_fixtures_entry() -> None:
     argparser.add_argument("--gameweek", type=int)
     argparser.add_argument("--team_id", type=int)
     args = argparser.parse_args()
+    provider = FixtureProvider(httpx.Client())
     pprint(
         [
             fixture.model_dump_json()
-            for fixture in get_fixtures(
+            for fixture in provider.get_fixtures(
                 httpx.Client(), args.gameweek, args.team_id
             )
         ]
@@ -48,10 +46,11 @@ def get_league_data_entry() -> None:
     argparser.add_argument("-lid", "--league_id", type=str, required=True)
     argparser.add_argument("-p", "--page", type=int, required=True)
     args = argparser.parse_args()
+    provider = Managers(httpx.Client())
     pprint(
-        get_league_data(httpx.Client(), args.league_id, args.page).model_dump(
-            mode="json"
-        )
+        provider.get_league_data(
+            httpx.Client(), args.league_id, args.page
+        ).model_dump(mode="json")
     )
 
 
@@ -61,8 +60,9 @@ def get_manager_gw_data_entry() -> None:
     argparser.add_argument("-tid", "--team_id", type=str, required=True)
     argparser.add_argument("-gw", "--gameweek", type=str, required=True)
     args = argparser.parse_args()
+    provider = Managers(httpx.Client())
     pprint(
-        get_manager_gw_data(
+        provider.get_manager_gw_data(
             httpx.Client(), args.team_id, args.gameweek
         ).model_dump(mode="json")
     )
@@ -71,12 +71,12 @@ def get_manager_gw_data_entry() -> None:
 def get_players_entry() -> None:
     """Get all players in league."""
     bootstrap = get_bootstrap_data(httpx.Client())
-    pprint(get_players(bootstrap).model_dump(mode="json"))
+    pprint(Players(httpx.Client()).get_players(bootstrap))
 
 
 def get_teams_entry() -> None:
     """Get all teams in league."""
-    get_teams(get_bootstrap_data(httpx.Client()))
+    pprint(Teams(httpx.Client()).get_teams())
 
 
 def get_player() -> None:
@@ -84,4 +84,8 @@ def get_player() -> None:
     argparser = argparse.ArgumentParser()
     argparser.add_argument("--player_id", type=str)
     args = argparser.parse_args()
-    pprint(get_player_summary(httpx.Client(), args.player_id))
+    pprint(
+        Players(httpx.Client())
+        .get_player_by_id(args.player_id)
+        .model_dump(mode="json")
+    )
