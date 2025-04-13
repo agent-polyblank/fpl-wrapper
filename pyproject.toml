@@ -20,6 +20,9 @@ classifiers = [
 ]
 dependencies = ["httpx", "coverage[toml]", "pydantic"]
 
+[tool.hatch.envs.default]
+installer = "uv"
+
 [project.urls]
 Documentation = "https://github.com/agent-polyblank/fpl-wrapper#readme"
 Issues = "https://github.com/agent-polyblank/fpl-wrapper#issues"
@@ -58,8 +61,6 @@ exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 only-include = ["src"]
 sources = ["src"]
 
-[tool.hatch.envs.default]
-installer = "uv"
 
 [project.scripts]
 fpl_get_fixtures = "fpl_wrapper.entry_points:get_fixtures_entry"
@@ -150,3 +151,10 @@ docstring-code-line-length = "dynamic"
 # Allow pytest to pick up source directory.
 [tool.pytest.ini_options]
 pythonpath = [".", "src"]
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "1.0.0"
+tag_format = "$major.$minor.$patch$prerelease"
+version_files = ["src/commitizen_demo/__about__.py", "pyproject.toml:version"]
+bump_message = "Bump $current_version → $new_version [skip ci]" # when using CI to bump version skip commit

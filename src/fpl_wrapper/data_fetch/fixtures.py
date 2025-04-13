@@ -5,28 +5,46 @@ import httpx
 from fpl_wrapper.model.fixture_models import Fixtures
 
 
-def get_fixtures(client: httpx.Client, gameweek: int, team_id: int) -> Fixtures:
+class FixtureProvider:
     """
-    Get fixtures.
+    Class to fetch fixture data from the FPL API.
 
-    Args:
-    ----
+    Attributes
+    ----------
         client (httpx.Client): HTTP client instance.
-        gameweek (int): Gameweek number.
-        team_id (int): Team id.
-
-    Returns:
-    -------
-        list[dict]: List of fixtures.
+        bootstrap_data (dict[str, any]): League data.
 
     """
-    params = {}
-    if gameweek:
-        params["event"] = gameweek
-    if team_id:
-        params["team"] = team_id
 
-    response = client.get(
-        "https://fantasy.premierleague.com/api/fixtures/", params=params
-    )
-    return Fixtures(fixtures=response.json())
+    def __init__(
+        self,
+        client: httpx.Client,
+    ) -> None:
+        """Initialise Fixture class."""
+        self.client = client
+
+    def get_fixtures(self, gameweek: int, team_id: int) -> Fixtures:
+        """
+        Get fixtures.
+
+        Args:
+        ----
+            client (httpx.Client): HTTP client instance.
+            gameweek (int): Gameweek number.
+            team_id (int): Team id.
+
+        Returns:
+        -------
+            list[dict]: List of fixtures.
+
+        """
+        params = {}
+        if gameweek:
+            params["event"] = gameweek
+        if team_id:
+            params["team"] = team_id
+
+        response = self.client.get(
+            "https://fantasy.premierleague.com/api/fixtures/", params=params
+        )
+        return Fixtures(fixtures=response.json())

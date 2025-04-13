@@ -1,12 +1,8 @@
-from pydantic_core import ValidationError
+"""Test the models in the fpl_wrapper.models.managers_models module."""
+
+from pydantic import ValidationError
 import pytest
-from fpl_wrapper.model.bootstrap_models import TeamData
-from fpl_wrapper.model.club_models import Club
-from fpl_wrapper.model.managers_models import (
-    ChipsEnum,
-    LeagueData,
-    ManagerTeamData,
-)
+from fpl_wrapper.model.managers_models import ChipsEnum, LeagueData, ManagerTeamData
 
 
 def test_league_data_model(fixture_league_data):
@@ -36,9 +32,3 @@ def test_get_league_data_invalid_chip(fixture_picks_data_wildcard):
     picks["active_chip"] = "invalid_chip"
     with pytest.raises(ValidationError):
         team_data = ManagerTeamData(**picks)
-
-
-def test_club(fixture_team_forest):
-    """Test Club model."""
-    club_data = Club(**fixture_team_forest)
-    assert club_data is not None

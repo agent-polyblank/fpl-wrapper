@@ -1,6 +1,5 @@
 """Tests for the fixtures model."""
 
-from fpl_wrapper.model.fixture_models import Fixtures
 from fpl_wrapper.model.players_models import Fixture
 
 

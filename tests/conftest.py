@@ -7,7 +7,7 @@ from fpl_wrapper.model.managers_models import ManagerTeamData
 
 @pytest.fixture
 def fixture_player_match_fixture_data():
-    """Fixture for player fixture data."""
+    """Fixture for player faixture data."""
     return {
         "id": 1,
         "code": 100,
@@ -215,7 +215,18 @@ def fixture_player_data(
 @pytest.fixture
 def fixture_players_bootstrap_data(fixture_player_detail_data):
     """Fixture for bootstrap data."""
-    return {"elements": [fixture_player_detail_data]}
+    return {
+        "chips": [],
+        "events": [],
+        "game_settings": {},
+        "game_config": {},
+        "phases": [],
+        "teams": [],
+        "total_players": 0,
+        "elements": [fixture_player_detail_data],
+        "element_stats": [],
+        "element_types": [],
+    }
 
 
 @pytest.fixture

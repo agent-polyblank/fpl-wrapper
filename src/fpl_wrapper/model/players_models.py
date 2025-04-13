@@ -202,3 +202,12 @@ class PlayerData(BaseModel):
     fixtures: list[Fixture]
     history: list[History]
     history_past: list[HistoryPast]
+
+
+class PlayerSummaryResponse(BaseModel):
+    """Player summary response model."""
+
+    fixtures: list[Fixture]
+    history: list[History]
+    history_past: list[HistoryPast]
+    player_detail: PlayerDetail

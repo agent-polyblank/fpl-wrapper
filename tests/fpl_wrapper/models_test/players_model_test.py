@@ -3,7 +3,6 @@
 from fpl_wrapper.model.players_models import (
     History,
     HistoryPast,
-    PlayerData,
     PlayerDetail,
 )
 

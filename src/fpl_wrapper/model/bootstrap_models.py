@@ -67,10 +67,10 @@ class Event(BaseModel):
     average_entry_score: int
     finished: bool
     data_checked: bool
-    highest_scoring_entry: int
+    highest_scoring_entry: int | None
     deadline_time_epoch: int
     deadline_time_game_offset: int
-    highest_score: int
+    highest_score: int | None
     is_previous: bool
     is_current: bool
     is_next: bool
@@ -82,13 +82,13 @@ class Event(BaseModel):
     ranked_count: int
     overrides: EventOverrides
     chip_plays: list[ChipPlay]
-    most_selected: int
-    most_transferred_in: int
-    top_element: int
-    top_element_info: TopElementInfo
+    most_selected: int | None
+    most_transferred_in: int | None
+    top_element: int | None
+    top_element_info: TopElementInfo | None
     transfers_made: int
-    most_captained: int
-    most_vice_captained: int
+    most_captained: int | None
+    most_vice_captained: int | None
 
 
 class ElementType(BaseModel):

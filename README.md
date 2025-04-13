@@ -1,8 +1,5 @@
-<!-- pdoc exclude start -->
 <div align="center">
   <h1>FPL Wrapper - A Wrapper for the FPL API</h1>
-  <br />
-  <br />
   <a href="https://github.com/agent-polyblank/fpl-wrapper/issues/new?assignees=&labels=bug&template=1-bug-report.md&title=bug%3A+">Report a Bug</a>
   ·
   <a href="https://github.com/agent-polyblank/fpl-wrapper/issues/new?assignees=&labels=enhancement&template=4-feature-request.md&title=feat%3A+">Request a Feature</a>
@@ -27,7 +24,6 @@
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
-- [Installation](#installation)
 - [Hatch Environment:](#hatch-environment)
 - [Usage](#usage)
   - [Activating the Environment](#activating-the-environment)
@@ -42,20 +38,11 @@
 - [Contributing](#contributing)
 - [License](#license)
 
-
-## Installation
-
-```bash
-cd fpl_wrapper
-pip install .
-```
-
 ## Hatch Environment:
 
 1. Navigate to the project directory:
 
 ```bash
-cd fpl
 hatch env create
 ```
 
@@ -71,7 +58,9 @@ hatch shell
 
 ### Running the Application
 
-You can either run the functionality from the command line or use the package as a library.
+```
+pip install .
+```
 
 #### Command Line
 
@@ -145,7 +134,17 @@ hatch fmt
 To run tests using PyTest, execute:
 
 ```bash
-hatch run test
+hatch run test:test
+```
+You can also run tests with coverage:
+
+```bash
+hatch run test:cov-xml
+```
+You can also generate a coverage report in HTML format:
+
+```bash
+hatch run test:cov-html
 ```
 
 ## Deployment
@@ -160,7 +159,7 @@ hatch build
 
 ## Contributing
 
-Contributions to fpl are welcomed! Please follow these steps:
+Contributions to this project are welcomed! Please follow these steps:
 
 1. Fork the repository.
 2. Create a new branch for your feature or bugfix.
