@@ -5,21 +5,14 @@
   <a href="https://github.com/agent-polyblank/fpl-wrapper/issues/new?assignees=&labels=enhancement&template=4-feature-request.md&title=feat%3A+">Request a Feature</a>
   .
   <a href="https://github.com/agent-polyblank/fpl-wrapper/discussions">Ask a Question</a>
+  <br />
+  <img src="https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge" alt="Licence">
+  <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54" alt="Python">
+  <img src="https://img.shields.io/badge/ruff-3670A0?style=for-the-badge&logo=ruff&logoColor=d7ff64" alt="Ruff">
+  <img src="https://img.shields.io/badge/pre--commit-3670A0?style=for-the-badge&logo=pre-commit&logoColor=fab040" alt="Pre-commit">
+  <img src="https://img.shields.io/badge/pytest-3670A0?style=for-the-badge&logo=pytest&logoColor=0a9edc" alt="PyTest">
 </div>
-
-<div align="center">
 <br />
-
-
-[![Licence](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](./LICENSE)
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) 
-![Ruff](https://img.shields.io/badge/ruff-3670A0?style=for-the-badge&logo=ruff&logoColor=d7ff64)
-![Pre-commit](https://img.shields.io/badge/pre--commit-3670A0?style=for-the-badge&logo=pre-commit&logoColor=fab040)
-![PyTest](https://img.shields.io/badge/pytest-3670A0?style=for-the-badge&logo=pytest&logoColor=0a9edc)
-</div>
-<!-- pdoc exclude end -->
-
------
 
 ## Table of Contents
 
@@ -40,7 +33,14 @@
 
 ## Hatch Environment:
 
-1. Navigate to the project directory:
+This project uses [Hatch](https://hatch.pypa.io/latest/) for environment management. To set up the environment, follow these steps:
+1. Install Hatch if you haven't already:
+
+```bash
+uv pip install hatch
+```
+
+2. Navigate to the project directory:
 
 ```bash
 hatch env create
@@ -59,7 +59,7 @@ hatch shell
 ### Running the Application
 
 ```
-pip install .
+uv pip install .
 ```
 
 #### Command Line
@@ -107,10 +107,8 @@ options:
 
 Or alternatively you can use the package as a library:
 
-```python
-from fpl_wrapper.data_fetch.fixtures import get_fixtures
-get_fixtures()
-```
+The documentation can be found [here](TODO)
+
 ## Development
 
 ### Installing Dependencies
@@ -146,6 +144,15 @@ You can also generate a coverage report in HTML format:
 ```bash
 hatch run test:cov-html
 ```
+
+# Documentation
+
+The documentation is generated using [pdoc](https://pdoc.dev/) and can be found in the `docs` directory. To generate the documentation, run:
+
+```bash
+hatch run docs:build
+```
+
 
 ## Deployment
 
