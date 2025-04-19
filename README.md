@@ -6,6 +6,7 @@
   .
   <a href="https://github.com/agent-polyblank/fpl-wrapper/discussions">Ask a Question</a>
   <br />
+  <br />
   <img src="https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge" alt="Licence">
   <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54" alt="Python">
   <img src="https://img.shields.io/badge/ruff-3670A0?style=for-the-badge&logo=ruff&logoColor=d7ff64" alt="Ruff">
