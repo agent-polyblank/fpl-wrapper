@@ -14,7 +14,6 @@ def get_bootstrap_data(
     Args:
     ----
         client (httpx.Client): HTTP client instance.
-        data (dict[str, any]): Static content data.
 
     Returns:
     -------

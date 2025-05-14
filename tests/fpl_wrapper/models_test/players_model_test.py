@@ -1,22 +1,22 @@
 """Tests for models."""
 
 from fpl_wrapper.model.players_models import (
-    History,
-    HistoryPast,
+    PlayerHistory,
+    PlayerHistoryPast,
     PlayerDetail,
 )
 
 
 def test_history_model(fixture_history_data):
     """Test history model."""
-    history = History(**fixture_history_data)
+    history = PlayerHistory(**fixture_history_data)
     assert history.total_points == 10
     assert history.goals_scored == 1
 
 
 def test_history_past_model(fixture_history_past_data):
     """Test history past model."""
-    history_past = HistoryPast(**fixture_history_past_data)
+    history_past = PlayerHistoryPast(**fixture_history_past_data)
     assert history_past.season_name == "2022/23"
     assert history_past.total_points == 200
 

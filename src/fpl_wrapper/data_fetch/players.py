@@ -17,7 +17,7 @@ class Players:
     Attributes
     ----------
         client (httpx.Client): HTTP client instance.
-        bootstrap_data (dict[str, any]): League data.
+        bootstrap_data (BootstrapData): League data.
 
     """
 
@@ -33,13 +33,9 @@ class Players:
         """
         Get all players in league.
 
-        Args:
-        ----
-            data (dict[str, any]): league data.
-
-        Returns:
+        Returns
         -------
-            list[PlayerDetail]: Details of all players in the league.
+            dict[int, PlayerDetail]: Details of all players in the league.
 
         """
         return {player.id: player for player in self.bootstrap_data.elements}
@@ -59,12 +55,11 @@ class Players:
 
         """
         url = f"https://fantasy.premierleague.com/api/element-summary/{player_id}/"
-        return PlayerSummaryResponse(**self.client.get(url).json)
+        return PlayerSummaryResponse(**self.client.get(url).json())
 
     def get_player_by_id(
         self,
         player_id: int,
-        bootstrap_data: list[PlayerDetail],
     ) -> PlayerData:
         """
         Get player data by player id.
@@ -73,7 +68,6 @@ class Players:
         ----
             client (httpx.Client): httpx client instance.
             player_id (int): player id.
-            bootstrap_data(list[PlayerDetail]): List of player details.
 
         Returns:
         -------
@@ -83,7 +77,7 @@ class Players:
         player_summary = self.get_player_summary(player_id)
 
         return PlayerData(
-            player_detail=bootstrap_data[player_id],
+            player_detail=self.bootstrap_data.elements[player_id],
             fixtures=player_summary.fixtures,
             history=player_summary.history,
             history_past=player_summary.history_past,

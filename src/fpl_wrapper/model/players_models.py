@@ -1,37 +1,42 @@
-"""Models for player data."""
+"""Models for player data in FPL API."""
 
-from enum import IntEnum
-
-from pydantic import BaseModel, Field
-
-from fpl_wrapper.model.fixture_models import Fixture
+from pydantic import BaseModel, ConfigDict
 
 
-class PositionEnum(IntEnum):
-    """Enum for player positions."""
+class PlayerFixture(BaseModel):
+    """Model for player fixture data."""
 
-    Goalkeeper = 1
-    Defender = 2
-    Midfielder = 3
-    Forward = 4
-    Manager = 5
+    id: int
+    code: int
+    team_h: int
+    team_a: int
+    event: int = None
+    finished: bool = None
+    minutes: int | None = None
+    provisional_start_time: bool = None
+    kickoff_time: str | None = None
+    event_name: str | None = None
+    is_home: bool
+    difficulty: int
+    finished_provisional: bool | None = None
+    started: bool | None = None
+    stats: list | None = None
+    team_h_difficulty: int | None = None
+    team_a_difficulty: int | None = None
+    pulse_id: int | None = None
 
-    def __str__(self) -> str:
-        """Get string representation."""
-        return self.name.capitalize()
 
-
-class History(BaseModel):
-    """History model."""
+class PlayerHistory(BaseModel):
+    """Model for player history data."""
 
     element: int
     fixture: int
     opponent_team: int
     total_points: int
     was_home: bool
-    kickoff_time: str
-    team_h_score: int | None
-    team_a_score: int | None
+    kickoff_time: str | None = None
+    team_h_score: int | None = None
+    team_a_score: int | None = None
     round: int
     minutes: int
     goals_scored: int
@@ -50,20 +55,17 @@ class History(BaseModel):
     creativity: str
     threat: str
     ict_index: str
-    starts: int
-    expected_goals: str
-    expected_assists: str
-    expected_goal_involvements: str
-    expected_goals_conceded: str
     value: int
     transfers_balance: int
     selected: int
     transfers_in: int
     transfers_out: int
 
+    model_config = ConfigDict(extra="ignore")
 
-class HistoryPast(BaseModel):
-    """History past model."""
+
+class PlayerHistoryPast(BaseModel):
+    """Model for player history past seasons."""
 
     season_name: str
     element_code: int
@@ -87,15 +89,18 @@ class HistoryPast(BaseModel):
     creativity: str
     threat: str
     ict_index: str
-    starts: int
-    expected_goals: str
-    expected_assists: str
-    expected_goal_involvements: str
-    expected_goals_conceded: str
+
+
+class PlayerSummaryResponse(BaseModel):
+    """Model for player summary response."""
+
+    fixtures: list[PlayerFixture]
+    history: list[PlayerHistory]
+    history_past: list[PlayerHistoryPast]
 
 
 class PlayerDetail(BaseModel):
-    """Details from player bootstrap-static endpoint."""
+    """Model for player detail."""
 
     chance_of_playing_next_round: int | None
     chance_of_playing_this_round: int | None
@@ -187,27 +192,11 @@ class PlayerDetail(BaseModel):
     starts_per_90: float
     clean_sheets_per_90: float
 
-    # A property to store the player's position based on element_type
-    position: str = Field(default="Unknown", init=False)
-
-    def model_post_init(self, __context) -> None:  # noqa: ANN001
-        """Set the player's position based on element_type."""
-        self.position = PositionEnum(self.element_type).name
-
 
 class PlayerData(BaseModel):
-    """Player data model."""
+    """Model for player data."""
 
-    player_detail: PlayerDetail = None
-    fixtures: list[Fixture]
-    history: list[History]
-    history_past: list[HistoryPast]
-
-
-class PlayerSummaryResponse(BaseModel):
-    """Player summary response model."""
-
-    fixtures: list[Fixture]
-    history: list[History]
-    history_past: list[HistoryPast]
     player_detail: PlayerDetail
+    fixtures: list[PlayerFixture]
+    history: list[PlayerHistory]
+    history_past: list[PlayerHistoryPast]

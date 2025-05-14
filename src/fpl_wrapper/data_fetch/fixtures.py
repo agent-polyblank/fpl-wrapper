@@ -12,7 +12,6 @@ class FixtureProvider:
     Attributes
     ----------
         client (httpx.Client): HTTP client instance.
-        bootstrap_data (dict[str, any]): League data.
 
     """
 

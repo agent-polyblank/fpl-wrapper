@@ -43,20 +43,20 @@ class Fixture(BaseModel):
     code: int
     event: int
     finished: bool
-    finished_provisional: bool
+    finished_provisional: bool | None
     id: int
     kickoff_time: str
     minutes: int
     provisional_start_time: bool
-    started: bool
+    started: bool | None
     team_a: int
     team_a_score: int | None
     team_h: int
     team_h_score: int | None
-    stats: list[Stat]
-    team_h_difficulty: int
-    team_a_difficulty: int
-    pulse_id: int
+    stats: list[Stat] | None
+    team_h_difficulty: int | None
+    team_a_difficulty: int | None
+    pulse_id: int | None
 
 
 class Fixtures(BaseModel):

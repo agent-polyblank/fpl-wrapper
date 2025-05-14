@@ -1156,6 +1156,8 @@ def fixture_player_event():
         "team_a_score": 0,
         "team_h": 14,
         "team_h_score": 1,
+        "is_home": True,
+        "difficulty": 1,
         "stats": [
             {
                 "identifier": "goals_scored",

@@ -82,7 +82,7 @@ def get_teams_entry() -> None:
 def get_player() -> None:
     """Get player by id."""
     argparser = argparse.ArgumentParser()
-    argparser.add_argument("--player_id", type=str)
+    argparser.add_argument("--player_id", type=int, required=True)
     args = argparser.parse_args()
     pprint(
         Players(httpx.Client())
