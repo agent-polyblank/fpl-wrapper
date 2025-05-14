@@ -68,7 +68,6 @@ build = "python -m pdoc src/fpl_wrapper --output-dir docs"
 only-include = ["src"]
 sources = ["src"]
 
-
 [project.scripts]
 fpl_get_fixtures = "fpl_wrapper.entry_points:get_fixtures_entry"
 fpl_get_league_data = "fpl_wrapper.entry_points:get_league_data_entry"
@@ -158,10 +157,3 @@ docstring-code-line-length = "dynamic"
 # Allow pytest to pick up source directory.
 [tool.pytest.ini_options]
 pythonpath = [".", "src"]
-
-[tool.commitizen]
-name = "cz_conventional_commits"
-version = "1.0.0"
-tag_format = "$major.$minor.$patch$prerelease"
-version_files = ["src/commitizen_demo/__about__.py", "pyproject.toml:version"]
-bump_message = "Bump $current_version → $new_version [skip ci]" # when using CI to bump version skip commit
