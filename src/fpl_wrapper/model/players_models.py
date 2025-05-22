@@ -1,6 +1,23 @@
 """Models for player data in FPL API."""
 
+from enum import Enum
+from http import HTTPStatus
+from pathlib import Path
+
+import httpx
 from pydantic import BaseModel, ConfigDict
+
+from fpl_wrapper.data_fetch.exception import PhotoNotFoundError
+
+
+class PlayerTypesEnum(int, Enum):
+    """Enum for player types."""
+
+    GOALKEEPER = 1
+    DEFENDER = 2
+    MIDFIELDER = 3
+    FORWARD = 4
+    MANAGER = 5
 
 
 class PlayerFixture(BaseModel):
@@ -191,6 +208,46 @@ class PlayerDetail(BaseModel):
     selected_rank_type: int
     starts_per_90: float
     clean_sheets_per_90: float
+
+    region: int | None = None
+    team_join_date: str | None = None
+    birth_date: str | None = None
+    has_temporary_code: bool = False
+    opta_code: str | None = None
+
+    def get_player_photo(self, output_directory: str = "/player_photos") -> str:
+        """
+        Download player photo.
+
+        Args:
+        ----
+            output_directory (str): Directory to save the photo.
+
+        Returns:
+        -------
+            str: Player photo URL.
+
+        """
+        client = httpx.Client()
+
+        if self.element_type == PlayerTypesEnum.MANAGER:  # Manager
+            url = f"https://resources.premierleague.com/premierleague/photos/players/250x250/{self.opta_code}.png"
+        else:
+            url = f"https://resources.premierleague.com/premierleague/photos/players/250x250/p{self.code}.png"
+        filename = f"{self.code}_{self.web_name}.png"
+        output_path = Path(output_directory) / filename
+
+        if not output_path.parent.exists():
+            output_path.parent.mkdir(parents=True, exist_ok=False)
+
+        with output_path.open("wb") as file:
+            response = client.get(url)
+            if response.status_code != HTTPStatus.OK:
+                raise PhotoNotFoundError(
+                    image=filename,
+                    reason=f"HTTP {response.status_code}: {response.text}",
+                )
+            file.write(response.content)
 
 
 class PlayerData(BaseModel):

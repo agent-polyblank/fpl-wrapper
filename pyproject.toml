@@ -73,7 +73,9 @@ fpl_get_fixtures = "fpl_wrapper.entry_points:get_fixtures_entry"
 fpl_get_league_data = "fpl_wrapper.entry_points:get_league_data_entry"
 fpl_get_manager_gw_data = "fpl_wrapper.entry_points:get_manager_gw_data_entry"
 fpl_get_players = "fpl_wrapper.entry_points:get_players_entry"
-fpl_get_player = "fpl_wrapper.entry_points:get_player"
+fpl_get_player = "fpl_wrapper.entry_points:get_player_entry"
+fpl_get_player_photos = "fpl_wrapper.entry_points:get_player_photos_entry"
+fpl_get_all_player_photos = "fpl_wrapper.entry_points:get_player_photos_all_entry"
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.

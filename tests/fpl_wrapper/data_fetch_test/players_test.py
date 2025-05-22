@@ -15,7 +15,7 @@ def test_get_players(mocker, fixture_bootstrap_data):
     )
 
     players = Players(client=client)
-    players_dict = players.get_players()
+    players_dict = players.get_all_player_detail()
 
     assert isinstance(players_dict, dict)
     assert all(isinstance(val, PlayerDetail) for val in players_dict.values())

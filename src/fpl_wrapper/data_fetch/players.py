@@ -29,7 +29,7 @@ class Players:
         self.client = client
         self.bootstrap_data = get_bootstrap_data(client)
 
-    def get_players(self) -> dict[int, PlayerDetail]:
+    def get_all_player_detail(self) -> dict[int, PlayerDetail]:
         """
         Get all players in league.
 
@@ -39,6 +39,22 @@ class Players:
 
         """
         return {player.id: player for player in self.bootstrap_data.elements}
+
+    def get_player_detail(self, player_id: int) -> PlayerDetail:
+        """
+        Get player detail by player id.
+
+        Args:
+        ----
+            client (httpx.Client): HTTP client instance.
+            player_id (int): Player id.
+
+        Returns:
+        -------
+            PlayerDetail: PlayerDetail object.
+
+        """
+        return self.get_all_player_detail()[player_id]
 
     def get_player_summary(self, player_id: str) -> PlayerSummaryResponse:
         """

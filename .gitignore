@@ -228,3 +228,9 @@ pyrightconfig.json
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,macos
 
 docs/
+
+## fpl
+
+
+# Default location for player photos
+player_photos/**
