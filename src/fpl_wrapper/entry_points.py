@@ -115,3 +115,30 @@ def get_player_photos_all_entry() -> None:
         except PhotoNotFoundError as e:
             print(f"Error downloading photo for player {player.id}: {e}")  # noqa: T201
             continue
+
+
+def get_team_crest_entry() -> None:
+    """Get team crest."""
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument("--team_id", type=int, required=True)
+    args = argparser.parse_args()
+    client = httpx.Client()
+    team = Teams(client).get_team(args.team_id)
+    team.get_team_crest(client)
+
+
+def get_all_team_crests_entry() -> None:
+    """Get all team crests."""
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument(
+        "--output_directory", type=str, default="club_crests", required=False
+    )
+    args = argparser.parse_args()
+    client = httpx.Client()
+    teams = Teams(client).get_teams()
+    for team in teams.values():
+        try:
+            team.get_team_crest(client, output_directory=args.output_directory)
+        except PhotoNotFoundError as e:
+            print(f"Error downloading crest for team {team.id}: {e}")  # noqa: T201
+            continue

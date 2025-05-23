@@ -13,9 +13,9 @@ class Teams:
         """Initialise Teams class."""
         self.client = client
         self.bootstrap_data = get_bootstrap_data(client)
-        self.teams = {team.id: team for team in self.bootstrap_data.teams}
+        self.teams = {team.code: team for team in self.bootstrap_data.teams}
 
-    def get_team(self, team_id: int) -> dict[str, str]:
+    def get_team(self, team_id: int) -> TeamData:
         """
         Get team data by team ID.
 

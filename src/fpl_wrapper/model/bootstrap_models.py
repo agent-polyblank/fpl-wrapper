@@ -1,10 +1,14 @@
 """Models for bootstrap data."""
 
 from enum import StrEnum
+from http import HTTPStatus
+from pathlib import Path
 from typing import Any
 
+import httpx
 from pydantic import BaseModel
 
+from fpl_wrapper.data_fetch.exception import ClubCrestNotFoundError
 from fpl_wrapper.model.players_models import PlayerDetail
 
 
@@ -32,6 +36,45 @@ class TeamData(BaseModel):
     strength_defence_home: int
     strength_defence_away: int
     pulse_id: int
+
+    def get_team_crest(
+        self,
+        client: httpx.Client,
+        output_directory: str = "club_crests/",
+    ) -> None:
+        """
+        Fetch team crest image.
+
+        Args:
+        ----
+            output_directory (str): Directory to save the image.
+            client (httpx.Client): HTTP client instance.
+
+        Args:
+        ----
+            output_directory (str): _description_
+            client (httpx.Client): _description_
+
+        Raises:
+        ------
+            PhotoNotFoundError: _description_
+
+        """
+        filename = f"{self.code}_{self.name}.png"
+        output_path = Path(output_directory) / filename
+        url = f"https://resources.premierleague.com/premierleague/badges/100/t{self.code}@x2.png"
+        if not output_path.parent.exists():
+            output_path.parent.mkdir(parents=True, exist_ok=False)
+
+        with output_path.open("wb") as file:
+            response = client.get(url)
+            if response.status_code != HTTPStatus.OK:
+                raise ClubCrestNotFoundError(
+                    team_code=self.code,
+                    team_name=self.name,
+                    reason=f"HTTP {response.status_code}: {response.text}",
+                )
+            file.write(response.content)
 
 
 class ChipPlay(BaseModel):

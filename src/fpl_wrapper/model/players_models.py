@@ -9,6 +9,10 @@ from pydantic import BaseModel, ConfigDict
 
 from fpl_wrapper.data_fetch.exception import PhotoNotFoundError
 
+BASE_PHOTO_URL = (
+    "https://resources.premierleague.com/premierleague/photos/players/250x250"
+)
+
 
 class PlayerTypesEnum(int, Enum):
     """Enum for player types."""
@@ -231,9 +235,10 @@ class PlayerDetail(BaseModel):
         client = httpx.Client()
 
         if self.element_type == PlayerTypesEnum.MANAGER:  # Manager
-            url = f"https://resources.premierleague.com/premierleague/photos/players/250x250/{self.opta_code}.png"
+            url = f"{BASE_PHOTO_URL}/{self.opta_code}.png"
         else:
-            url = f"https://resources.premierleague.com/premierleague/photos/players/250x250/p{self.code}.png"
+            url = f"{BASE_PHOTO_URL}/p{self.code}.png"
+
         filename = f"{self.code}_{self.web_name}.png"
         output_path = Path(output_directory) / filename
 
