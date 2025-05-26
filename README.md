@@ -91,48 +91,82 @@ hatch shell
 ```
 uv pip install .
 ```
-
 #### Command Line
 
 When installed the following commands are available:
 
-* `fpl_get_fixtures` - Fetch the fixture list.
-* `fpl_get_league_data` - Fetch data for a league (paginated, for larger leagues you will need to specify the page number).
-* `fpl_get_manager_gw_data` - Fetch data for a manager (fpl player)
-* `fpl_get_players` - Get player data.
-* `fpl_get_player` - Get data for a single player.
+* `fpl_get_fixtures` - Fetch the fixture list for the current season.
+* `fpl_get_league_data` - Fetch standings data for a classic league with pagination support.
+* `fpl_get_manager_gw_data` - Fetch team selection data for a specific manager in a gameweek.
+* `fpl_get_players` - Get detailed data for all players in the game.
+* `fpl_get_player` - Get detailed information and history for a specific player.
 
 Usage:
 
 ```bash
 fpl_get_fixtures 
 (no arguments)
+# Returns all fixtures for the current FPL season
 
 fpl_get_league_data
 usage: get_league_data [-h] [--league_id LEAGUE_ID] [--page PAGE]
 
 options:
   -h, --help            show this help message and exit
-  --league_id LEAGUE_ID
-  --page PAGE
+  --league_id LEAGUE_ID  The ID of the classic league to retrieve
+  --page PAGE           The page number for paginated results (default: 1)
 
 fpl_get_manager_gw_data
 usage: get_manager_gw_data [-h] [--team_id TEAM_ID] [--gw GW]
 
 options:
   -h, --help         show this help message and exit
-  --team_id TEAM_ID
-  --gw GW
+  --team_id TEAM_ID  The FPL team/entry ID for the manager
+  --gw GW            The gameweek number to retrieve data for
 
 fpl_get_players
 (no arguments)
+# Returns data for all players in the current FPL season
 
 fpl_get_player
 usage: get_player [-h] [--player_id PLAYER_ID]
 
 options:
   -h, --help            show this help message and exit
-  --player_id PLAYER_ID
+  --player_id PLAYER_ID  The ID of the player to retrieve detailed data for
+```
+
+There is also functionality to get various resources from the fpl server such as shirt images, player images, and team logos. These can be accessed via the `FPLWrapper` class methods:
+
+```bash
+fpl_get_team_shirts
+usage: fpl_get_team_shirts [-h] --team_id TEAM_ID [--output_directory OUTPUT_DIRECTORY] [--keeper-shirt]
+
+options:
+  -h, --help            show this help message and exit
+  --team_id TEAM_ID
+  --output_directory OUTPUT_DIRECTORY
+  --keeper-shirt
+
+fpl_get_all_team_shirts
+usage: fpl_get_all_team_shirts [-h] [--output_directory OUTPUT_DIRECTORY]
+
+options:
+  -h, --help            show this help message and exit
+  --output_directory OUTPUT_DIRECTORY
+
+usage: fpl_get_team_crest [-h] --team_id TEAM_ID
+
+options:
+  -h, --help         show this help message and exit
+  --team_id TEAM_ID
+
+usage: fpl_get_all_team_crests [-h] [--output_directory OUTPUT_DIRECTORY]
+
+options:
+  -h, --help            show this help message and exit
+  --output_directory OUTPUT_DIRECTORY
+
 ```
 
 Or alternatively you can use the package as a library:

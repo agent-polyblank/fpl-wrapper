@@ -8,7 +8,10 @@ from typing import Any
 import httpx
 from pydantic import BaseModel
 
-from fpl_wrapper.data_fetch.exception import ClubCrestNotFoundError
+from fpl_wrapper.data_fetch.exception import (
+    ClubCrestNotFoundError,
+    ShirtNotFoundError,
+)
 from fpl_wrapper.model.players_models import PlayerDetail
 
 
@@ -50,14 +53,9 @@ class TeamData(BaseModel):
             output_directory (str): Directory to save the image.
             client (httpx.Client): HTTP client instance.
 
-        Args:
-        ----
-            output_directory (str): _description_
-            client (httpx.Client): _description_
-
         Raises:
         ------
-            PhotoNotFoundError: _description_
+            PhotoNotFoundError: If the photo is not found.
 
         """
         filename = f"{self.code}_{self.name}.png"
@@ -70,6 +68,68 @@ class TeamData(BaseModel):
             response = client.get(url)
             if response.status_code != HTTPStatus.OK:
                 raise ClubCrestNotFoundError(
+                    team_code=self.code,
+                    team_name=self.name,
+                    reason=f"HTTP {response.status_code}: {response.text}",
+                )
+            file.write(response.content)
+
+    def get_team_goalkeeper_shirt(
+        self,
+        client: httpx.Client,
+        output_directory: str = "team_shirts/",
+    ) -> None:
+        """
+        Fetch team crest image.
+
+        Args:
+        ----
+            output_directory (str): Directory to save the image.
+            client (httpx.Client): HTTP client instance.
+
+        Raises:
+        ------
+            PhotoNotFoundError: If the photo is not found.
+
+        """
+        filename = f"{self.code}_{self.name}_shirt_keeper.png"
+        output_path = Path(output_directory) / filename
+        url = f"https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_{self.code}_1-220.webp"
+        self._get_shirt(client, output_path, url)
+
+    def get_team_shirt(
+        self,
+        client: httpx.Client,
+        output_directory: str = "team_shirts/",
+    ) -> None:
+        """
+        Fetch team crest image.
+
+        Args:
+        ----
+            output_directory (str): Directory to save the image.
+            client (httpx.Client): HTTP client instance.
+
+        Raises:
+        ------
+            PhotoNotFoundError: If the photo is not found.
+
+        """
+        filename = f"{self.code}_{self.name}_shirt.png"
+        output_path = Path(output_directory) / filename
+        url = f"https://fantasy.premierleague.com/dist/img/shirts/standard/shirt_{self.code}-220.webp"
+        self._get_shirt(client, output_path, url)
+
+    def _get_shirt(
+        self, client: httpx.Client, output_path: str, url: str
+    ) -> None:
+        if not output_path.parent.exists():
+            output_path.parent.mkdir(parents=True, exist_ok=False)
+
+        with output_path.open("wb") as file:
+            response = client.get(url)
+            if response.status_code != HTTPStatus.OK:
+                raise ShirtNotFoundError(
                     team_code=self.code,
                     team_name=self.name,
                     reason=f"HTTP {response.status_code}: {response.text}",

@@ -78,6 +78,8 @@ fpl_get_player_photos = "fpl_wrapper.entry_points:get_player_photos_entry"
 fpl_get_all_player_photos = "fpl_wrapper.entry_points:get_player_photos_all_entry"
 fpl_get_team_crest = "fpl_wrapper.entry_points:get_team_crest_entry"
 fpl_get_all_team_crests = "fpl_wrapper.entry_points:get_all_team_crests_entry"
+fpl_get_team_shirts = "fpl_wrapper.entry_points:get_team_shirt_entry"
+fpl_get_all_team_shirts = "fpl_wrapper.entry_points:get_all_team_shirts_entry"
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
