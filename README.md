@@ -40,22 +40,22 @@
 
 This table provides an overview of the Fantasy Premier League API endpoints supported by the FPL Wrapper library.
 
-| Endpoint                                                        | Status          | Method                  | Description                                                   | CLI Command                                      |
-| --------------------------------------------------------------- | --------------- | ----------------------- | ------------------------------------------------------------- | ------------------------------------------------ |
-| `/bootstrap-static/`                                            | ✅ Supported     | `get_bootstrap_data()`  | Retrieves static data including teams, players, game settings | N/A (internal use)                               |
-| `/fixtures/`                                                    | ✅ Supported     | `get_fixtures()`        | Retrieves all fixtures for the season                         | `fpl_get_fixtures`                               |
-| `/element-summary/{player_id}/`                                 | ✅ Supported     | `get_player_by_id()`    | Retrieves detailed data for a specific player                 | `fpl_get_player --player_id ID`                  |
-| `/elements/`                                                    | ✅ Supported     | `get_players()`         | Retrieves all player data                                     | `fpl_get_players`                                |
-| `/entry/{team_id}/event/{event_id}/picks/`                      | ✅ Supported     | `get_manager_gw_data()` | Retrieves team selection for a specific manager in a gameweek | `fpl_get_manager_gw_data --team_id ID --gw GW`   |
-| `/leagues-classic/{league_id}/standings/?page_standings={page}` | ✅ Supported     | `get_league_data()`     | Retrieves standings for a classic league                      | `fpl_get_league_data --league_id ID --page PAGE` |
-| `/entry/{team_id}/history/`                                     | ❌ Not Supported | -                       | Retrieves a manager's season history                          | -                                                |
-| `/dream-team/`                                                  | ❌ Not Supported | -                       | Retrieves the dream team                                      | -                                                |
-| `/entry/{team_id}/`                                             | ❌ Not Supported | -                       | Retrieves general data about an FPL team                      | -                                                |
-| `/event/{event_id}/live/`                                       | ❌ Not Supported | -                       | Retrieves live player data for a gameweek                     | -                                                |
-| `/event-status/`                                                | ❌ Not Supported | -                       | Retrieves status of each gameweek                             | -                                                |
-| `/my-team/{team_id}/`                                           | ❌ Not Supported | -                       | Retrieves authenticated user's team                           | -                                                |
-| `/transfers/`                                                   | ❌ Not Supported | -                       | Retrieves authenticated user's transfer data                  | -                                                |
-| `/me/`                                                          | ❌ Not Supported | -                       | Retrieves authenticated user data                             | -                                                |
+| Endpoint                                                        | Status          | Method                              | Description                                                   | CLI Command                                      |
+| --------------------------------------------------------------- | --------------- | ----------------------------------- | ------------------------------------------------------------- | ------------------------------------------------ |
+| `/bootstrap-static/`                                            | ✅ Supported     | `get_bootstrap_data()`              | Retrieves static data including teams, players, game settings | N/A (internal use)                               |
+| `/fixtures/`                                                    | ✅ Supported     | `FixtureProvider.get_fixtures()`    | Retrieves all fixtures for the season                         | `fpl_get_fixtures`                               |
+| `/element-summary/{player_id}/`                                 | ✅ Supported     | `Players.get_player_by_id()`        | Retrieves detailed data for a specific player                 | `fpl_get_player --player_id ID`                  |
+| `/elements/`                                                    | ✅ Supported     | `Players.get_all_player_detail()`   | Retrieves all player data                                     | `fpl_get_players`                                |
+| `/entry/{team_id}/event/{event_id}/picks/`                      | ✅ Supported     | `Managers.get_manager_gw_data()`    | Retrieves team selection for a specific manager in a gameweek | `fpl_get_manager_gw_data --team_id ID --gw GW`   |
+| `/leagues-classic/{league_id}/standings/?page_standings={page}` | ✅ Supported     | `Managers.get_league_data()`        | Retrieves standings for a classic league                      | `fpl_get_league_data --league_id ID --page PAGE` |
+| `/entry/{team_id}/history/`                                     | ❌ Not Supported | -                                   | Retrieves a manager's season history                          | -                                                |
+| `/dream-team/`                                                  | ✅ Supported     | `DreamTeamFetcher.get_dream_team()` | Retrieves the dream team                                      | -                                                |
+| `/entry/{team_id}/`                                             | ✅ Supported     | `Managers.get_manager_basic_info()` | Retrieves general data about an FPL team                      | -                                                |
+| `/event/{event_id}/live/`                                       | ❌ Not Supported | -                                   | Retrieves live player data for a gameweek                     | -                                                |
+| `/event-status/`                                                | ❌ Not Supported | -                                   | Retrieves status of each gameweek                             | -                                                |
+| `/my-team/{team_id}/`                                           | ❌ Not Supported | -                                   | Retrieves authenticated user's team                           | -                                                |
+| `/transfers/`                                                   | ❌ Not Supported | -                                   | Retrieves authenticated user's transfer data                  | -                                                |
+| `/me/`                                                          | ❌ Not Supported | -                                   | Retrieves authenticated user data                             | -                                                |
 
 ## Future Development
 

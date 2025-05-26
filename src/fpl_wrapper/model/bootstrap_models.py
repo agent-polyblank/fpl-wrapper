@@ -68,7 +68,7 @@ class TeamData(BaseModel):
             response = client.get(url)
             if response.status_code != HTTPStatus.OK:
                 raise ClubCrestNotFoundError(
-                    team_code=self.code,
+                    team_code=str(self.code),
                     team_name=self.name,
                     reason=f"HTTP {response.status_code}: {response.text}",
                 )
@@ -121,7 +121,7 @@ class TeamData(BaseModel):
         self._get_shirt(client, output_path, url)
 
     def _get_shirt(
-        self, client: httpx.Client, output_path: str, url: str
+        self, client: httpx.Client, output_path: Path, url: str
     ) -> None:
         if not output_path.parent.exists():
             output_path.parent.mkdir(parents=True, exist_ok=False)
@@ -130,7 +130,7 @@ class TeamData(BaseModel):
             response = client.get(url)
             if response.status_code != HTTPStatus.OK:
                 raise ShirtNotFoundError(
-                    team_code=self.code,
+                    team_code=str(self.code),
                     team_name=self.name,
                     reason=f"HTTP {response.status_code}: {response.text}",
                 )

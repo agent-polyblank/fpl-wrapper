@@ -56,7 +56,7 @@ class Players:
         """
         return self.get_all_player_detail()[player_id]
 
-    def get_player_summary(self, player_id: str) -> PlayerSummaryResponse:
+    def get_player_summary(self, player_id: int) -> PlayerSummaryResponse:
         """
         Get player summary from the FPL API.
 

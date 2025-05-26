@@ -31,10 +31,10 @@ class PlayerFixture(BaseModel):
     code: int
     team_h: int
     team_a: int
-    event: int = None
-    finished: bool = None
+    event: int | None = None
+    finished: bool | None = None
     minutes: int | None = None
-    provisional_start_time: bool = None
+    provisional_start_time: bool | None = None
     kickoff_time: str | None = None
     event_name: str | None = None
     is_home: bool
@@ -132,7 +132,7 @@ class PlayerDetail(BaseModel):
     cost_change_start_fall: int
     dreamteam_count: int
     element_type: int  # Integer representation of position
-    ep_next: str
+    ep_next: str | None = None  # could be none when season is over
     ep_this: str
     event_points: int
     first_name: str
@@ -219,7 +219,9 @@ class PlayerDetail(BaseModel):
     has_temporary_code: bool = False
     opta_code: str | None = None
 
-    def get_player_photo(self, output_directory: str = "/player_photos") -> str:
+    def get_player_photo(
+        self, output_directory: str = "/player_photos"
+    ) -> None:
         """
         Download player photo.
 

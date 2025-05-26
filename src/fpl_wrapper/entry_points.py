@@ -5,7 +5,6 @@ from pprint import pprint
 
 import httpx
 
-from fpl_wrapper.data_fetch.bootstrap_data import get_bootstrap_data
 from fpl_wrapper.data_fetch.exception import (
     PhotoNotFoundError,
     ShirtNotFoundError,
@@ -36,14 +35,8 @@ def get_fixtures_entry() -> None:
     argparser.add_argument("--team_id", type=int, required=True, help="Team ID")
     args = argparser.parse_args()
     provider = FixtureProvider(httpx.Client())
-    pprint(
-        [
-            fixture.model_dump_json()
-            for fixture in provider.get_fixtures(
-                httpx.Client(), args.gameweek, args.team_id
-            )
-        ]
-    )
+    fixtures = provider.get_fixtures(args.gameweek, args.team_id)
+    pprint(fixtures.model_dump(mode="json"))
 
 
 def get_league_data_entry() -> None:
@@ -58,9 +51,9 @@ def get_league_data_entry() -> None:
     args = argparser.parse_args()
     provider = Managers(httpx.Client())
     pprint(
-        provider.get_league_data(
-            httpx.Client(), args.league_id, args.page
-        ).model_dump(mode="json")
+        provider.get_league_data(args.league_id, args.page).model_dump(
+            mode="json"
+        )
     )
 
 
@@ -76,16 +69,15 @@ def get_manager_gw_data_entry() -> None:
     args = argparser.parse_args()
     provider = Managers(httpx.Client())
     pprint(
-        provider.get_manager_gw_data(
-            httpx.Client(), args.team_id, args.gameweek
-        ).model_dump(mode="json")
+        provider.get_manager_gw_data(args.team_id, args.gameweek).model_dump(
+            mode="json"
+        )
     )
 
 
 def get_players_entry() -> None:
     """Get all players in league."""
-    bootstrap = get_bootstrap_data(httpx.Client())
-    pprint(Players(httpx.Client()).get_all_player_detail(bootstrap))
+    pprint(Players(httpx.Client()).get_all_player_detail())
 
 
 def get_teams_entry() -> None:

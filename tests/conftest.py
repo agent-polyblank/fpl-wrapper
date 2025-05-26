@@ -1711,3 +1711,23 @@ def fixture_manager_basic():
         "last_deadline_value": 1028,
         "last_deadline_total_transfers": 28,
     }
+
+
+@pytest.fixture()
+def fixture_dream_team():
+    return {
+        "top_player": {"id": 328, "points": 344},
+        "team": [
+            {"element": 235, "points": 158, "position": 1},
+            {"element": 350, "points": 153, "position": 2},
+            {"element": 311, "points": 148, "position": 3},
+            {"element": 573, "points": 145, "position": 4},
+            {"element": 328, "points": 344, "position": 5},
+            {"element": 99, "points": 236, "position": 6},
+            {"element": 182, "points": 214, "position": 7},
+            {"element": 514, "points": 193, "position": 8},
+            {"element": 401, "points": 211, "position": 9},
+            {"element": 447, "points": 200, "position": 10},
+            {"element": 58, "points": 186, "position": 11},
+        ],
+    }
