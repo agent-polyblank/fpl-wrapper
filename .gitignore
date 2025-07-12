@@ -236,3 +236,7 @@ docs/
 player_photos/**
 club_crests/**
 team_shirts/**
+
+*.zip
+
+results/

@@ -18,7 +18,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = ["httpx", "coverage[toml]", "pydantic"]
+dependencies = ["httpx", "coverage[toml]", "pydantic", "loguru"]
 
 [tool.hatch.envs.default]
 installer = "uv"
@@ -69,17 +69,29 @@ only-include = ["src"]
 sources = ["src"]
 
 [project.scripts]
+fpl_get_bootstrap = "fpl_wrapper.entry_points:get_bootstrap_data_entry"
 fpl_get_fixtures = "fpl_wrapper.entry_points:get_fixtures_entry"
 fpl_get_league_data = "fpl_wrapper.entry_points:get_league_data_entry"
 fpl_get_manager_gw_data = "fpl_wrapper.entry_points:get_manager_gw_data_entry"
 fpl_get_players = "fpl_wrapper.entry_points:get_players_entry"
 fpl_get_player = "fpl_wrapper.entry_points:get_player_entry"
+fpl_get_teams = "fpl_wrapper.entry_points:get_teams_entry"
+fpl_get_all_player_detail = "fpl_wrapper.entry_points:get_all_player_detail_entry"
+fpl_get_gameweek_data_for_each_manager_for_each_gameweek = "fpl_wrapper.entry_points:get_gameweek_data_for_each_manager_for_each_gameweek_entry"
+fpl_get_league_standings = "fpl_wrapper.entry_points:get_league_standings_entry"
+fpl_get_manager_data_entry = "fpl_wrappper.entry_points:get_manager_data_entry"
+fpl_get_manager_full_data_from_league_entry = "fpl_wrappper.entry_points:get_manager_full_data_from_league_entry"
+fpl_get_all_managers_in_league_entry = "fpl_wrappper.entry_points:get_all_managers_in_league_entry"
+
+# resources
 fpl_get_player_photos = "fpl_wrapper.entry_points:get_player_photos_entry"
 fpl_get_all_player_photos = "fpl_wrapper.entry_points:get_player_photos_all_entry"
 fpl_get_team_crest = "fpl_wrapper.entry_points:get_team_crest_entry"
 fpl_get_all_team_crests = "fpl_wrapper.entry_points:get_all_team_crests_entry"
 fpl_get_team_shirts = "fpl_wrapper.entry_points:get_team_shirt_entry"
 fpl_get_all_team_shirts = "fpl_wrapper.entry_points:get_all_team_shirts_entry"
+fpl_get_full_manager_data_for_league = "fpl_wrapper.entry_points:get_full_manager_data_for_league_entry"
+fpl_get_full_manager_data_for_league_max_pages = "fpl_wrapper.entry_points:get_full_manager_data_for_league_max_pages_entry"
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.

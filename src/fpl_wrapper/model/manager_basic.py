@@ -2,6 +2,8 @@
 
 from pydantic import BaseModel
 
+from fpl_wrapper.model.managers_models import ManagerTeamData
+
 
 class ActivePhase(BaseModel):
     """Model for active phase."""
@@ -12,8 +14,8 @@ class ActivePhase(BaseModel):
     rank_sort: int
     total: int
     league_id: int
-    rank_count: int
-    entry_percentile_rank: int
+    rank_count: int | None
+    entry_percentile_rank: int | None
 
 
 class ClassicLeague(BaseModel):
@@ -36,11 +38,11 @@ class ClassicLeague(BaseModel):
     has_cup: bool
     cup_league: int | None
     cup_qualified: bool | None
-    rank_count: int
-    entry_percentile_rank: int
+    rank_count: int | None
+    entry_percentile_rank: int | None
     active_phases: list[ActivePhase]
-    entry_rank: int
-    entry_last_rank: int
+    entry_rank: int | None
+    entry_last_rank: int | None
 
 
 class H2HLeague(BaseModel):
@@ -55,7 +57,7 @@ class H2HLeague(BaseModel):
     max_entries: int | None
     league_type: str
     scoring: str
-    admin_entry: int
+    admin_entry: int | None
     start_event: int
     entry_can_leave: bool
     entry_can_admin: bool
@@ -66,8 +68,8 @@ class H2HLeague(BaseModel):
     rank_count: int | None
     entry_percentile_rank: int | None
     active_phases: list[ActivePhase]
-    entry_rank: int
-    entry_last_rank: int
+    entry_rank: int | None
+    entry_last_rank: int | None
 
 
 class CupMatch(BaseModel):
@@ -132,7 +134,7 @@ class ManagerBase(BaseModel):
     id: int
     joined_time: str
     started_event: int
-    favourite_team: int
+    favourite_team: int | None
     player_first_name: str
     player_last_name: str
     player_region_id: int
@@ -149,7 +151,14 @@ class ManagerBase(BaseModel):
     name: str
     name_change_blocked: bool
     entered_events: list[int]
-    kit: str
+    kit: str | None = None
     last_deadline_bank: int
     last_deadline_value: int
     last_deadline_total_transfers: int
+
+
+class ManagerData(BaseModel):
+    """Model for manager data."""
+
+    manager: ManagerBase
+    gameweeks: list[ManagerTeamData] | None

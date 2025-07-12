@@ -71,10 +71,10 @@ class EntryHistory(BaseModel):
     event: int
     points: int
     total_points: int
-    rank: int
-    rank_sort: int
+    rank: int | None
+    rank_sort: int | None
     overall_rank: int
-    percentile_rank: int
+    percentile_rank: int | None
     bank: int
     value: int
     event_transfers: int
@@ -118,12 +118,13 @@ class ChipsEnum(StrEnum):
     free_hit = "freehit"
     triple_captain = "3xc"
     wildcard = "wildcard"
+    manager = "manager"
 
 
 class ManagerTeamData(BaseModel):
     """Model for team data."""
 
-    active_chip: ChipsEnum | None
+    active_chip: ChipsEnum | None = None
     automatic_subs: list[dict]
     entry_history: EntryHistory
     picks: list[Pick]

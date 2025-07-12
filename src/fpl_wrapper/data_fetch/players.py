@@ -28,6 +28,7 @@ class Players:
         """Initialise Player class."""
         self.client = client
         self.bootstrap_data = get_bootstrap_data(client)
+        self.detail = self.get_all_player_detail()
 
     def get_all_player_detail(self) -> dict[int, PlayerDetail]:
         """
@@ -93,7 +94,7 @@ class Players:
         player_summary = self.get_player_summary(player_id)
 
         return PlayerData(
-            player_detail=self.bootstrap_data.elements[player_id],
+            player_detail=self.detail[player_id],
             fixtures=player_summary.fixtures,
             history=player_summary.history,
             history_past=player_summary.history_past,
