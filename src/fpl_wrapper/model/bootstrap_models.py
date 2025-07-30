@@ -64,14 +64,14 @@ class TeamData(BaseModel):
         if not output_path.parent.exists():
             output_path.parent.mkdir(parents=True, exist_ok=False)
 
+        response = client.get(url)
+        if response.status_code != HTTPStatus.OK:
+            raise ClubCrestNotFoundError(
+                team_code=str(self.code),
+                team_name=self.name,
+                reason=f"HTTP {response.status_code}: {response.text}",
+            )
         with output_path.open("wb") as file:
-            response = client.get(url)
-            if response.status_code != HTTPStatus.OK:
-                raise ClubCrestNotFoundError(
-                    team_code=str(self.code),
-                    team_name=self.name,
-                    reason=f"HTTP {response.status_code}: {response.text}",
-                )
             file.write(response.content)
 
     def get_team_goalkeeper_shirt(

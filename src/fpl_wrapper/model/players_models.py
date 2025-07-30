@@ -133,7 +133,7 @@ class PlayerDetail(BaseModel):
     dreamteam_count: int
     element_type: int  # Integer representation of position
     ep_next: str | None = None  # could be none when season is over
-    ep_this: str
+    ep_this: str | None = None
     event_points: int
     first_name: str
     form: str
@@ -247,13 +247,13 @@ class PlayerDetail(BaseModel):
         if not output_path.parent.exists():
             output_path.parent.mkdir(parents=True, exist_ok=False)
 
+        response = client.get(url)
+        if response.status_code != HTTPStatus.OK:
+            raise PhotoNotFoundError(
+                image=filename,
+                reason=f"HTTP {response.status_code}: {response.text}",
+            )
         with output_path.open("wb") as file:
-            response = client.get(url)
-            if response.status_code != HTTPStatus.OK:
-                raise PhotoNotFoundError(
-                    image=filename,
-                    reason=f"HTTP {response.status_code}: {response.text}",
-                )
             file.write(response.content)
 
 

@@ -194,7 +194,7 @@ def get_league_standings_entry() -> None:
         "-p", "--page", type=int, required=True, help="Page number"
     )
     argparser.add_argument(
-        "--output_file", type=str, required=True, help="Output file path"
+        "--output_file", type=str, required=False, help="Output file path"
     )
     args = argparser.parse_args()
     provider = Managers(httpx.Client())
@@ -344,7 +344,7 @@ def get_player_photos_all_entry() -> None:
     argparser.add_argument(
         "--output_directory",
         type=str,
-        default="player_photos",
+        default="results/player_photos",
         help="Output directory for player photos defaults to 'player_photos'",
         required=False,
     )
@@ -354,7 +354,8 @@ def get_player_photos_all_entry() -> None:
         try:
             player.get_player_photo(output_directory=args.output_directory)
         except PhotoNotFoundError as e:
-            logger.error(f"Error downloading photo for player {player.id}: {e}")
+            logger.error(f"Photo for player {player.web_name} not found")
+            logger.error(f"They may not have a photo yet: {e}")
             continue
 
 
@@ -373,7 +374,10 @@ def get_all_team_crests_entry() -> None:
     """Get all team crests."""
     argparser = argparse.ArgumentParser()
     argparser.add_argument(
-        "--output_directory", type=str, default="club_crests", required=False
+        "--output_directory",
+        type=str,
+        default="results/club_crests",
+        required=False,
     )
     args = argparser.parse_args()
     client = httpx.Client()
@@ -424,7 +428,7 @@ def get_all_team_shirts_entry() -> None:
     argparser.add_argument(
         "--output_directory",
         type=str,
-        default="team_shirts",
+        default="results/team_shirts",
         required=False,
         help="Output directory for team shirts defaults to 'team_shirts'",
     )

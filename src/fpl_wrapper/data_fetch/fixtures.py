@@ -22,7 +22,9 @@ class FixtureProvider:
         """Initialise Fixture class."""
         self.client = client
 
-    def get_fixtures(self, gameweek: int, team_id: int) -> Fixtures:
+    def get_fixtures(
+        self, gameweek: int | None = None, team_id: int | None = None
+    ) -> Fixtures:
         """
         Get fixtures.
 

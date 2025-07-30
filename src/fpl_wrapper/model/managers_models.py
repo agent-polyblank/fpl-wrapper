@@ -60,7 +60,7 @@ class LeagueData(BaseModel):
     """League data model."""
 
     new_entries: NewEntry
-    last_updated_data: datetime
+    last_updated_data: datetime | None  # Can be none before the season starts
     league: League
     standings: Standings
 
