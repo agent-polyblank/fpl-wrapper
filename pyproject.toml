@@ -82,6 +82,7 @@ fpl_get_league_standings = "fpl_wrapper.entry_points:get_league_standings_entry"
 fpl_get_manager_data_entry = "fpl_wrappper.entry_points:get_manager_data_entry"
 fpl_get_manager_full_data_from_league_entry = "fpl_wrappper.entry_points:get_manager_full_data_from_league_entry"
 fpl_get_all_managers_in_league_entry = "fpl_wrappper.entry_points:get_all_managers_in_league_entry"
+fpl_get_gw_live_data_entry = "fpl_wrapper.entry_points:get_gw_live_data_entry"
 
 # resources
 fpl_get_player_photos = "fpl_wrapper.entry_points:get_player_photos_entry"

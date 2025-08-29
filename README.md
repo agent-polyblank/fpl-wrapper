@@ -51,15 +51,23 @@ This table provides an overview of the Fantasy Premier League API endpoints supp
 | `/entry/{team_id}/history/`                                     | ❌ Not Supported | -                                   | Retrieves a manager's season history                          | -                                                |
 | `/dream-team/`                                                  | ✅ Supported     | `DreamTeamFetcher.get_dream_team()` | Retrieves the dream team                                      | -                                                |
 | `/entry/{team_id}/`                                             | ✅ Supported     | `Managers.get_manager_basic_info()` | Retrieves general data about an FPL team                      | -                                                |
-| `/event/{event_id}/live/`                                       | ❌ Not Supported | -                                   | Retrieves live player data for a gameweek                     | -                                                |
+| `/event/{event_id}/live/`                                       | ✅ Supported     | `GWLiveData.get_live_data()`        | Retrieves live player data for a gameweek                     | `fpl_get_gw_live_data --gameweek GW`             |
 | `/event-status/`                                                | ❌ Not Supported | -                                   | Retrieves status of each gameweek                             | -                                                |
 | `/my-team/{team_id}/`                                           | ❌ Not Supported | -                                   | Retrieves authenticated user's team                           | -                                                |
 | `/transfers/`                                                   | ❌ Not Supported | -                                   | Retrieves authenticated user's transfer data                  | -                                                |
 | `/me/`                                                          | ❌ Not Supported | -                                   | Retrieves authenticated user data                             | -                                                |
 
-## Future Development
+## Resource Download Support Matrix
 
-We plan to add support for additional endpoints in future releases. If you need a specific endpoint that's not yet supported, please open an issue or submit a pull request.
+| Resource                           | Method                                                      | CLI Command                                      |
+| ---------------------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
+| Player photo (single)              | `PlayerDetail.get_player_photo()`                           | `fpl_get_player_photos --player_id ID`           |
+| Player photos (all)                | `PlayerDetail.get_player_photo()`                           | `fpl_get_player_photos_all`                      |
+| Team crest (single)                | `TeamData.get_team_crest()`                                 | `fpl_get_team_crest --team_id ID`                |
+| Team crests (all)                  | `TeamData.get_team_crest()`                                 | `fpl_get_all_team_crests`                        |
+| Team shirt (outfield)              | `TeamData.get_team_shirt()`                                 | `fpl_get_team_shirt --team_id ID`                |
+| Team shirt (goalkeeper)            | `TeamData.get_team_goalkeeper_shirt()`                      | `fpl_get_team_shirt --team_id ID --keeper-shirt` |
+| Team shirts (all teams, both kits) | `TeamData.get_team_shirt()` + `get_team_goalkeeper_shirt()` | `fpl_get_all_team_shirts`                        |
 
 ## Hatch Environment:
 
@@ -100,46 +108,90 @@ When installed the following commands are available:
 * `fpl_get_manager_gw_data` - Fetch team selection data for a specific manager in a gameweek.
 * `fpl_get_players` - Get detailed data for all players in the game.
 * `fpl_get_player` - Get detailed information and history for a specific player.
+* `fpl_get_gw_live_data` - Fetch live player data for a gameweek.
 
 Usage:
 
 ```bash
-fpl_get_fixtures 
-(no arguments)
-# Returns all fixtures for the current FPL season
-
-fpl_get_league_data
-usage: get_league_data [-h] [--league_id LEAGUE_ID] [--page PAGE]
+# fpl_get_fixtures
+usage: fpl_get_fixtures [-h] --gameweek GAMEWEEK --team_id TEAM_ID [--output_file OUTPUT_FILE]
 
 options:
   -h, --help            show this help message and exit
-  --league_id LEAGUE_ID  The ID of the classic league to retrieve
-  --page PAGE           The page number for paginated results (default: 1)
+  --gameweek GAMEWEEK   Gameweek number (required)
+  --team_id TEAM_ID     Team ID (required)
+  --output_file OUTPUT_FILE
+```
 
-fpl_get_manager_gw_data
-usage: get_manager_gw_data [-h] [--team_id TEAM_ID] [--gw GW]
-
-options:
-  -h, --help         show this help message and exit
-  --team_id TEAM_ID  The FPL team/entry ID for the manager
-  --gw GW            The gameweek number to retrieve data for
-
-fpl_get_players
-(no arguments)
-# Returns data for all players in the current FPL season
-
-fpl_get_player
-usage: get_player [-h] [--player_id PLAYER_ID]
+```bash
+# fpl_get_league_data
+usage: fpl_get_league_data [-h] -lid LEAGUE_ID -p PAGE [-o OUTPUT_FILE]
 
 options:
   -h, --help            show this help message and exit
-  --player_id PLAYER_ID  The ID of the player to retrieve detailed data for
+  -lid LEAGUE_ID, --league_id LEAGUE_ID
+  -p PAGE, --page PAGE
+  -o OUTPUT_FILE, --output_file OUTPUT_FILE
+```
+
+```bash
+# fpl_get_manager_gw_data
+usage: fpl_get_manager_gw_data [-h] -tid TEAM_ID -gw GAMEWEEK --output_file OUTPUT_FILE
+
+options:
+  -h, --help            show this help message and exit
+  -tid TEAM_ID, --team_id TEAM_ID
+  -gw GAMEWEEK, --gameweek GAMEWEEK
+  --output_file OUTPUT_FILE
+```
+
+```bash
+# fpl_get_players
+(no arguments)
+```
+
+```bash
+# fpl_get_player
+usage: fpl_get_player [-h] --player_id PLAYER_ID [--output_file OUTPUT_FILE]
+
+options:
+  -h, --help            show this help message and exit
+  --player_id PLAYER_ID
+  --output_file OUTPUT_FILE
+```
+
+```bash
+# fpl_get_gw_live_data
+usage: fpl_get_gw_live_data [-h] --gameweek GAMEWEEK [-o OUTPUT_FILE]
+
+options:
+  -h, --help            show this help message and exit
+  --gameweek GAMEWEEK
+  -o OUTPUT_FILE, --output_file OUTPUT_FILE
 ```
 
 There is also functionality to get various resources from the fpl server such as shirt images, player images, and team logos. These can be accessed via the `FPLWrapper` class methods:
 
 ```bash
-fpl_get_team_shirts
+# fpl_get_player_photos (single)
+usage: fpl_get_player_photos [-h] --player_id PLAYER_ID
+
+options:
+  -h, --help            show this help message and exit
+  --player_id PLAYER_ID
+```
+
+```bash
+# fpl_get_player_photos_all
+usage: fpl_get_player_photos_all [-h] [--output_directory OUTPUT_DIRECTORY]
+
+options:
+  -h, --help            show this help message and exit
+  --output_directory OUTPUT_DIRECTORY
+```
+
+```bash
+# fpl_get_team_shirts
 usage: fpl_get_team_shirts [-h] --team_id TEAM_ID [--output_directory OUTPUT_DIRECTORY] [--keeper-shirt]
 
 options:
@@ -147,26 +199,33 @@ options:
   --team_id TEAM_ID
   --output_directory OUTPUT_DIRECTORY
   --keeper-shirt
+```
 
-fpl_get_all_team_shirts
+```bash
+# fpl_get_all_team_shirts
 usage: fpl_get_all_team_shirts [-h] [--output_directory OUTPUT_DIRECTORY]
 
 options:
   -h, --help            show this help message and exit
   --output_directory OUTPUT_DIRECTORY
+```
 
+```bash
+# fpl_get_team_crest
 usage: fpl_get_team_crest [-h] --team_id TEAM_ID
 
 options:
-  -h, --help         show this help message and exit
+  -h, --help            show this help message and exit
   --team_id TEAM_ID
+```
 
+```bash
+# fpl_get_all_team_crests
 usage: fpl_get_all_team_crests [-h] [--output_directory OUTPUT_DIRECTORY]
 
 options:
   -h, --help            show this help message and exit
   --output_directory OUTPUT_DIRECTORY
-
 ```
 
 Or alternatively you can use the package as a library:

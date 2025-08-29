@@ -14,6 +14,7 @@ from fpl_wrapper.data_fetch.exception import (
     ShirtNotFoundError,
 )
 from fpl_wrapper.data_fetch.fixtures import FixtureProvider
+from fpl_wrapper.data_fetch.gw_live_data import GWLiveData
 from fpl_wrapper.data_fetch.managers import Managers
 from fpl_wrapper.data_fetch.players import Players
 from fpl_wrapper.data_fetch.teams import Teams
@@ -577,3 +578,25 @@ def get_full_manager_data_for_league_max_pages_entry() -> None:
                 data = provider.get_all_manager_data(str(manager.entry))
                 result[str(manager.entry)] = data.model_dump(mode="json")
         json.dump(result, f, indent=2, ensure_ascii=False)
+
+
+def get_gw_live_data_entry() -> None:
+    """Get Gameweek live data for gameweek."""
+    argparser = argparse.ArgumentParser("Fixtures")
+    argparser.add_argument(
+        "--gameweek", type=int, required=True, help="Gameweek number"
+    )
+    argparser.add_argument(
+        "-o", "--output_file", type=str, required=False, help="Output file path"
+    )
+    args = argparser.parse_args()
+
+    if args.output_file:
+        path = Path(args.output_file)
+    else:
+        path = Path(f"results/live_data_gw_{args.gameweek}.json")
+
+    gw_live_fetcher = GWLiveData(httpx.Client())
+    results = gw_live_fetcher.get_live_data(args.gameweek)
+    with path.open("w", encoding="utf8") as f:
+        f.write(results.model_dump_json(indent=2))
